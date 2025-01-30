@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Map</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <h1>Campus Map and Navigation</h1>
+    <select id="campus" onchange="loadCampus()">
+        <option value="Moylish">Moylish</option>
+        <option value="LSAD">LSAD</option>
+        <option value="Thurles">Thurles</option>
+        <option value="Clonmel">Clonmel</option>
+    </select>
+    <div id="map-section"></div>
+    <script>
+        async function loadCampus() {
+            const campus = document.getElementById("campus").value;
+            const response = await fetch(`/location?campus=${campus}&query=site overview`);
+            const data = await response.json();
+
+            const mapSection = document.getElementById("map-section");
+            if (data.error) {
+                mapSection.innerHTML = `<p>${data.error}</p>`;
+            } else {
+                mapSection.innerHTML = `
+                    <h3>${campus} Site Overview</h3>
+                    <p>${data.description}</p>
+                    <iframe src="${data.map_url}" width="100%" height="600px"></iframe>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

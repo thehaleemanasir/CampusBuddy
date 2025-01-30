@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Buddy - Homepage</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('homepage') }}">Home</a></li>
+            <li><a href="/chatbot">Go to Chatbot</a></li>
+           <li><a href="{{ url_for('society_club') }}">Society & Clubs</a></li>
+           <li><a href="{{ url_for('academic_support') }}">Academic Support</a></li>
+            <li><a href="{{ url_for('mental_health') }}">Mental Health</a></li>
+            <li><a href="{{ url_for('events') }}">Events</a></li>
+            <li><a href="{{ url_for('social_networking') }}">Social Media</a></li>
+            <li><a href="{{ url_for('about') }}">About</a></li>
+        </ul>
+    </nav>
+
+    <!-- Welcome Section -->
+    <header>
+        <h1>Welcome to Campus Buddy!</h1>
+        <p>Your one-stop solution for campus navigation, events, and resources.</p>
+    </header>
+
+    <!-- Quick Links or Feature Highlights -->
+    <section>
+        <h2>Explore Campus Buddy</h2>
+        <ul>
+            <li><a href="{{ url_for('society_club') }}">Find Societies & Clubs</a></li>
+           <li><a href="{{ url_for('academic_support') }}">Get Academic Support</a></li>
+            <li><a href="{{ url_for('mental_health') }}">Access Wellness Resources</a></li>
+            <li><a href="{{ url_for('events') }}">Discover Events</a></li>
+            <li><a href="{{ url_for('social_networking') }}">Follow Us on Social Media</a></li>
+        </ul>
+    </section>
+
+    <footer>
+        <p>© 2025 Campus Buddy. All rights reserved.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,82 @@
+{
+  "Moylish": {
+    "General": {
+      "site_overview": {
+        "map_url": "https://tus.ie/app/uploads/ProfessionalServices/Estates/Midwest/Maps/MOYLISH-SITE.pdf",
+        "description": "A site overview of Moylish Campus, showing all major buildings and facilities."
+      },
+      "building_blocks": {
+        "map_url": "https://tus.ie/app/uploads/ProfessionalServices/Estates/Midwest/Maps/Map-Blocks.pdf",
+        "description": "Detailed building block information for Moylish Campus."
+      }
+    },
+    "Floors": {
+      "Ground Floor": {
+        "map_url": "https://tus.ie/app/uploads/ProfessionalServices/Estates/Midwest/Maps/MOYLISH-CAMPUS-MAPS-A5-GROUND.pdf",
+        "description": "The ground floor includes the library, main entrance, and cafeteria."
+      },
+      "First Floor": {
+        "map_url": "https://tus.ie/app/uploads/ProfessionalServices/Estates/Midwest/Maps/MOYLISH-CAMPUS-MAPS-A5-FIRST.pdf",
+        "description": "The first floor contains Lecture Theatre A and faculty offices."
+      },
+      "Second Floor": {
+        "map_url": "https://tus.ie/app/uploads/ProfessionalServices/Estates/Midwest/Maps/MOYLISH-CAMPUS-MAPS-A5-SECOND.pdf",
+        "description": "The second floor includes classrooms and meeting rooms."
+      }
+    }
+  },
+  "LSAD": {
+    "General": {
+      "Georges Quay": {
+        "map_url": "https://tus.ie/app/uploads/ProfessionalServices/Estates/Midwest/Maps/GEROGES-QUAY-A5.pdf",
+        "description": "An overview of the Georges Quay location for LSAD."
+      }
+    },
+    "Floors": {
+      "Ground Floor": {
+        "map_url": "https://tus.ie/app/uploads/ProfessionalServices/Estates/Midwest/Maps/CLARE-STREET-GROUND.pdf",
+        "description": "The ground floor includes the main hall and student services."
+      },
+      "First Floor": {
+        "map_url": "https://tus.ie/app/uploads/ProfessionalServices/Estates/Midwest/Maps/CLARE-STREET-FIRST.pdf",
+        "description": "The first floor contains additional classrooms and studios."
+      },
+      "Second Floor": {
+        "map_url": "https://tus.ie/app/uploads/ProfessionalServices/Estates/Midwest/Maps/CLARE-STREET-SECOND.pdf",
+        "description": "The second floor houses the art studio and gallery spaces."
+      }
+    }
+  },
+  "Thurles": {
+    "General": {
+      "site_overview": {
+        "map_url": "https://tus.ie/app/uploads/ProfessionalServices/Estates/Midwest/Maps/THURLES-SITE-A5.pdf",
+        "description": "A site overview of Thurles Campus."
+      }
+    },
+    "Floors": {
+      "Ground Floor": {
+        "map_url": "https://tus.ie/app/uploads/ProfessionalServices/Estates/Midwest/Maps/THURLES-GROUND-A5.pdf",
+        "description": "The ground floor includes Lecture Room T105 and the cafeteria."
+      },
+      "First Floor": {
+        "map_url": "https://tus.ie/app/uploads/ProfessionalServices/Estates/Midwest/Maps/THURLES-FIRST-A5.pdf",
+        "description": "The first floor houses the library and study areas."
+      }
+    }
+  },
+  "Clonmel": {
+    "General": {
+      "site_overview": {
+        "map_url": "https://tus.ie/app/uploads/ProfessionalServices/Estates/Midwest/Maps/CLONMEL-GROUND.pdf",
+        "description": "A general overview of Clonmel Campus."
+      }
+    },
+    "Floors": {
+      "Ground Floor": {
+        "map_url": "https://tus.ie/app/uploads/ProfessionalServices/Estates/Midwest/Maps/CLONMEL-GROUND.pdf",
+        "description": "The ground floor includes the main hall and digital labs."
+      }
+    }
+  }
+}

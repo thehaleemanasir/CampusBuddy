@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Buddy Chatbot</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+    <style>
+        body {
+            margin: 0;
+            background-color: #f2f7fc;
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .chat-container {
+            width: 400px;
+            height: 600px;
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+        }
+        .chat-header {
+            background-color: #0056b3;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+        .chat-body {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background-color: #f2f7fc;
+        }
+        .chat-message {
+            display: flex;
+            align-items: center;
+        }
+        .chat-message.bot {
+            justify-content: flex-start;
+        }
+        .chat-message.user {
+            justify-content: flex-end;
+        }
+        .message-content {
+            max-width: 70%;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+        }
+        .chat-message.bot .message-content {
+            background-color: #e9f5ff;
+            color: #000;
+            border-radius: 10px 10px 10px 0;
+        }
+        .chat-message.user .message-content {
+            background-color: #d1e7dd;
+            color: #000;
+            border-radius: 10px 10px 0 10px;
+        }
+        .chat-footer {
+            display: flex;
+            padding: 10px;
+            background-color: #ffffff;
+            border-top: 1px solid #ccc;
+        }
+        .chat-input {
+            flex: 1;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            padding: 10px 15px;
+        }
+        .send-btn {
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 20px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <!-- Chat Header -->
+                         <nav>
+        <ul>
+            <li><a href="{{ url_for('homepage') }}">Home</a></li>
+            <li><a href="/chatbot">Go to Chatbot</a></li>
+           <li><a href="{{ url_for('society_club') }}">Society & Clubs</a></li>
+           <li><a href="{{ url_for('academic_support') }}">Academic Support</a></li>
+            <li><a href="{{ url_for('mental_health') }}">Mental Health</a></li>
+            <li><a href="{{ url_for('events') }}">Events</a></li>
+            <li><a href="{{ url_for('social_networking') }}">Social Media</a></li>
+            <li><a href="{{ url_for('about') }}">About</a></li>
+        </ul>
+    </nav>
+        <div class="chat-header">
+            Campus Buddy Chatbot
+        </div>
+
+        <!-- Chat Body -->
+        <div class="chat-body">
+            {% for chat in chat_history %}
+                {% if chat.sender == 'bot' %}
+                <div class="chat-message bot">
+                    <div class="message-content">{{ chat.message }}</div>
+                </div>
+                {% else %}
+                <!-- User Message -->
+                <div class="chat-message user">
+                    <div class="message-content">{{ chat.message }}</div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <!-- Chat Footer -->
+        <div class="chat-footer">
+            <form action="/ask" method="POST" style="display: flex; width: 100%;">
+                <input type="text" name="question" class="chat-input" placeholder="Type your message..." required>
+                <button type="submit" class="send-btn">Send</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
