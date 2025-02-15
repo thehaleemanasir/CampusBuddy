@@ -1,10 +1,292 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canteen Staff Panel</title>
+   <!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- FontAwesome for Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <!-- Bootstrap JS (for responsive collapse & dropdowns) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+        <style>
+        /* Navbar */
+        .navbar {
+            background-color: RGB(33, 33, 33);
+            padding: 1rem 2rem;
+
+        }
+        .navbar-brand {
+            font-size: 8rem;
+            color: darkgoldenrod; /* TUS Yellow */
+            font-weight: bold;
+            margin-left: 15px ;
+        }
+        .navbar-nav .nav-link {
+            color: #ffffff !important;
+            font-size: 1.5rem;
+            margin-right: 15px;
+        }
+        .navbar-nav .nav-link:hover {
+            color: darkgoldenrod !important; /* TUS Yellow Hover */
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #2C2A51;
+            color: #ffffff;
+            text-align: center;
+            padding: 15px 0;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+        }
+    </style>
+
 </head>
-<body>
-$END$
+<body class="bg-light">
+
+<
+    <!-- ✅ Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="/"><img src="{{ url_for('static', filename='images/logo.png') }}" alt="TUS Campus Buddy Logo" height="200" class="me-2"></a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/canteen-menu">🍽️ Canteen Menu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('auth.logout') }}">👤Logout</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <h1 class="text-center">Canteen Staff Panel</h1>
+        <p class="text-center">Manage daily menu items for students.</p>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="alert-container">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <!-- Add Menu Form -->
+        <div class="card p-4 mb-4">
+            <h3>Add a New Menu Item</h3>
+            <form method="POST" action="{{ url_for('canteen.canteen_staff') }}">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label class="form-label">Item Name</label>
+                        <input type="text" name="item_name" class="form-control" placeholder="Item Name" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Meal Type</label>
+                        <select name="meal_type" class="form-select">
+                            <option value="Breakfast">Breakfast</option>
+                            <option value="Lunch">Lunch</option>
+                            <option value="Dinner">Dinner</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label">Price (€)</label>
+                        <input type="number" step="0.01" name="price" class="form-control" placeholder="Price (€)" required>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label">Dietary</label>
+                        <select name="dietary" class="form-select">
+                            <option value="Halal">Halal</option>
+                            <option value="Vegetarian">Vegetarian</option>
+                            <option value="Vegan">Vegan</option>
+                            <option value="Non-Vegetarian">Non-Vegetarian</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Campus</label>
+                        <select name="campus" id="campus-select" class="form-select">
+                            <option value="">Select Campus</option>
+                            {% for campus in campuses %}
+                                <option value="{{ campus.campus }}">{{ campus.campus }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                   <div class="col-md-3">
+                        <label class="form-label">Outlet</label>
+                        <select name="outlet" id="outlet-select" class="form-select">
+                            <option value="">Select Outlet</option>
+                            {% for campus in campuses %}
+                                {% for outlet in campus. outlets %}
+                                    <option value="{{ outlet.name }}" data-campus="{{ campus.campus }}">{{ outlet.name }}</option>
+                                {% endfor %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-12 mt-3">
+                        <label class="form-label">Description</label>
+                        <textarea name="description" class="form-control" placeholder="Enter a short description..." rows="2" required></textarea>
+                    </div>
+                    <div class="col-md-12 mt-3">
+                        <button type="submit" class="btn btn-success w-100">Add Item</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="card p-4 mb-4">
+            <h3>Filter Menu Items</h3>
+            <div class="row">
+                <!-- Campus Dropdown -->
+                <div class="col-md-4">
+                    <label for="filter-campus" class="form-label">Select Campus</label>
+                    <select id="filter-campus" class="form-select">
+                        <option value="">All Campuses</option>
+                        {% for campus in campuses %}
+                            <option value="{{ campus.campus }}">{{ campus.campus }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Outlet Dropdown -->
+                <div class="col-md-4">
+                    <label for="filter-outlet" class="form-label">Select Outlet</label>
+                    <select id="filter-outlet" class="form-select">
+                        <option value="">All Outlets</option>
+                    </select>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="col-md-4">
+                    <label for="search-menu" class="form-label">Search</label>
+                    <input type="text" id="search-menu" class="form-control" placeholder="Search by name or description">
+                </div>
+            </div>
+        </div>
+
+        <!-- Display Menu Items -->
+        <div class="card p-4">
+            <h3>Current Menu Items</h3>
+            <table class="table table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Description</th>
+                        <th>Meal Type</th>
+                        <th>Price (€)</th>
+                        <th>Dietary</th>
+                        <th>Campus</th>
+                        <th>Outlet</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+               <tbody id="menu-items-body">
+                    {% for item in menu_items %}
+                    <tr data-campus="{{ item.campus }}" data-outlet="{{ item.outlet }}" data-name="{{ item.item_name }}" data-description="{{ item.description }}">
+                        <td>{{ item.item_name }}</td>
+                        <td>{{ item.description }}</td>
+                        <td>{{ item.meal_type }}</td>
+                        <td>€{{ item.price }}</td>
+                        <td>{{ item.dietary }}</td>
+                        <td>{{ item.campus }}</td>
+                        <td>{{ item.outlet }}</td>
+                        <td>{% if item.archived %} Archived {% else %} Active {% endif %}</td>
+                        <td>
+                            <a href="{{ url_for('canteen.edit_menu_item', item_id=item._id) }}" class="btn btn-warning btn-sm">Edit</a>
+                            <a href="{{ url_for('canteen.archive_menu_item', item_id=item._id) }}" class="btn btn-secondary btn-sm">{% if item.archived %}Unarchive{% else %}Archive{% endif %}</a>
+                            <a href="{{ url_for('canteen.delete_menu_item', item_id=item._id) }}" class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+               </tbody>
+
+            </table>
+        </div>
+
+    </div>
+
+    <footer class="text-center text-white py-4 mt-5" style="background-color: #222222;">
+        <div class="container">
+            <p class="mb-1">&copy; 2025 TUS Campus Buddy. All rights reserved.</p>
+            <p>
+                <a href="/contact" class="text-white me-3">Contact</a> |
+                <a href="/about" class="text-white ms-3">About</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+   <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let campusDropdown = document.getElementById("filter-campus");
+        let outletDropdown = document.getElementById("filter-outlet");
+        let searchInput = document.getElementById("search-menu");
+        let tableRows = document.querySelectorAll("#menu-items-body tr");
+
+        // Populate outlets dynamically based on selected campus
+        campusDropdown.addEventListener("change", function() {
+            let selectedCampus = campusDropdown.value;
+            outletDropdown.innerHTML = '<option value="">All Outlets</option>';
+
+            let campuses = {{ campuses | tojson }};
+            let selectedData = campuses.find(c => c.campus === selectedCampus);
+
+            if (selectedData && selectedData.outlets) {
+                selectedData.outlets.forEach(outlet => {
+                    let option = document.createElement("option");
+                    option.value = outlet.name;
+                    option.textContent = outlet.name;
+                    outletDropdown.appendChild(option);
+                });
+            }
+
+            filterMenuItems();
+        });
+
+        // Filter menu items based on campus, outlet, or search query
+        function filterMenuItems() {
+            let selectedCampus = campusDropdown.value.toLowerCase();
+            let selectedOutlet = outletDropdown.value.toLowerCase();
+            let searchQuery = searchInput.value.toLowerCase();
+
+            tableRows.forEach(row => {
+                let rowCampus = row.getAttribute("data-campus").toLowerCase();
+                let rowOutlet = row.getAttribute("data-outlet").toLowerCase();
+                let rowName = row.getAttribute("data-name").toLowerCase();
+                let rowDescription = row.getAttribute("data-description").toLowerCase();
+
+                let matchesCampus = !selectedCampus || rowCampus === selectedCampus;
+                let matchesOutlet = !selectedOutlet || rowOutlet === selectedOutlet;
+                let matchesSearch = !searchQuery || rowName.includes(searchQuery) || rowDescription.includes(searchQuery);
+
+                row.style.display = matchesCampus && matchesOutlet && matchesSearch ? "" : "none";
+            });
+        }
+
+        // Attach event listeners
+        outletDropdown.addEventListener("change", filterMenuItems);
+        searchInput.addEventListener("keyup", filterMenuItems);
+    });
+</script>
+
+
+
 </body>
 </html>

@@ -1,10 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ outlet.name }} - TUS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-$END$
+<body class="bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: RGB(33, 33, 33); padding: 1rem 2rem; font-size: 20px">
+    <div class="container-fluid">
+        <!-- Logo -->
+        <a class="navbar-brand d-flex align-items-center" href="{{ url_for('home.homepage') }}">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="TUS Logo" height="220" width="500" class="me-2">
+        </a>
+
+        <!-- Mobile Menu Toggle -->
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars text-light"></i>
+        </button>
+
+        <!-- Navbar Links -->
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav align-items-center" >
+                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('home.homepage') }}">Home</a></li>
+                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('home.about') }}">About</a></li>
+                <li class="nav-item"><a class="nav-link text-white px-3 active-page" href="{{ url_for('canteen.canteen_menu') }}">Canteen Menu</a></li>
+                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('society.society_club') }}">Society & Clubs</a></li>
+                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('home.academic_support') }}">Academic Support</a></li>
+                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('home.mental_health') }}">Mental Health</a></li>
+                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('home.events') }}">Events</a></li>
+                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('home.social_networking') }}">Social Media</a></li>
+
+                <!-- Profile Dropdown (Only for Logged-in Users) -->
+                {% if 'user_id' in session %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white px-3" href="#" id="userDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        👤 Profile
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" style="background-color: #16213E;">
+                        <li><a class="dropdown-item text-light" href="{{ url_for('profile.view_profile') }}">
+                            <i class="fas fa-user"></i> View Profile</a></li>
+                        <li><hr class="dropdown-divider bg-light"></li>
+                        <li><a class="dropdown-item text-danger" href="{{ url_for('auth.logout') }}">
+                            <i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                    </ul>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+    <div class="container my-5">
+        <h1 class="fw-bold">{{ outlet.name }}</h1>
+        <p class="text-muted">{{ outlet.campus }} Campus</p>
+        <p>{{ outlet.description }}</p>
+
+        <div class="row">
+            <!-- Left: Outlet Image -->
+            <div class="col-md-7">
+                <img src="{{ outlet.image_url }}" class="img-fluid rounded shadow-sm" alt="{{ outlet.name }}">
+                <p class="text-muted mt-2">{{ outlet.name }} is a food and drink outlet on campus.</p>
+            </div>
+
+            <!-- Right: Opening Times -->
+            <div class="col-md-5">
+                <h3 class="border-bottom pb-2">Opening Times</h3>
+                <ul class="list-unstyled">
+                    {% if outlet.opening_times is mapping %}
+                        {% for day, time in outlet.opening_times.items() %}
+                            <li class="d-flex justify-content-between"><strong>{{ day }}</strong> <span>{{ time }}</span></li>
+                        {% endfor %}
+                    {% else %}
+                        <li>{{ outlet.opening_times }}</li>  <!-- If it's a string, just display it -->
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="table-responsive mt-4">
+    <h3 class="border-bottom pb-2">Menu for {{ outlet.name }} ({{ outlet.campus }} Campus)</h3>
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Item Name</th>
+                <th>Description</th>
+                <th>Meal Type</th>
+                <th>Price (€)</th>
+                <th>Dietary</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if menu_items %}
+                {% for item in menu_items %}
+                <tr>
+                    <td>{{ item.item_name }}</td>
+                    <td>{{ item.description }}</td>
+                    <td>{{ item.meal_type }}</td>
+                    <td>€{{ item.price }}</td>
+                    <td>{{ item.dietary }}</td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr><td colspan="5" class="text-center text-muted">No menu items available for this outlet.</td></tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+
+
+
+        <!-- Contact Information -->
+        <div class="mt-5">
+            <h3 class="border-bottom pb-2">Enquiries</h3>
+            <p>If you have any questions, contact us at:</p>
+            <p><a href="mailto:{{ outlet.contact_email }}" class="text-primary fw-bold">{{ outlet.contact_email }}</a></p>
+        </div>
+
+        <div class="mt-4 text-center">
+            <a href="{{ url_for('canteen.canteen_menu') }}" class="btn btn-primary">Back to Menu</a>
+        </div>
+    </div>
+
+<footer class="text-center mt-5 p-4" style="background-color: RGB(33, 33, 33); color:white">
+        <p>© 2025 Campus Buddy. All rights reserved.</p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

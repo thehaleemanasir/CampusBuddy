@@ -95,18 +95,37 @@
 <body>
     <div class="chat-container">
         <!-- Chat Header -->
-                         <nav>
-        <ul>
-            <li><a href="{{ url_for('homepage') }}">Home</a></li>
-            <li><a href="/chatbot">Go to Chatbot</a></li>
-           <li><a href="{{ url_for('society_club') }}">Society & Clubs</a></li>
-           <li><a href="{{ url_for('academic_support') }}">Academic Support</a></li>
-            <li><a href="{{ url_for('mental_health') }}">Mental Health</a></li>
-            <li><a href="{{ url_for('events') }}">Events</a></li>
-            <li><a href="{{ url_for('social_networking') }}">Social Media</a></li>
-            <li><a href="{{ url_for('about') }}">About</a></li>
-        </ul>
-    </nav>
+ <nav>
+    <ul>
+        <li><a href="{{ url_for('home.homepage') }}">Home</a></li>
+        <li><a href="{{ url_for('home.academic_support') }}">Academic Support</a></li>
+
+        {% if "user_id" in session %}
+            <li><a href="{{ url_for('canteen.canteen_menu') }}">Canteen Menu</a></li>
+            {% if session["role"] in ["canteen_admin", "canteen_staff"] %}
+                <li><a href="{{ url_for('canteen.canteen_staff') }}">Manage Canteen</a></li>
+            {% endif %}
+            <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+        {% else %}
+            <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+        {% endif %}
+
+        <li><a href="{{ url_for('home.mental_health') }}">Mental Health</a></li>
+        <li><a href="{{ url_for('home.events') }}">Events</a></li>
+        <li><a href="{{ url_for('home.social_networking') }}">Social Media</a></li>
+        <li><a href="{{ url_for('home.about') }}">About</a></li>
+        <li><a href="{{ url_for('society.society_club') }}">Society & Clubs</a></li>
+        <li><a href="{{ url_for('chatbot.chatbot') }}">Go to Chatbot</a></li>
+        {% if session['user_id'] %}
+            <li><a href="{{ url_for('profile.view_profile') }}">👤 {{ session['user_name'] }}</a></li>
+            <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+        {% else %}
+            <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+            <li><a href="{{ url_for('auth.register') }}">Register</a></li>
+        {% endif %}
+
+    </ul>
+</nav>
         <div class="chat-header">
             Campus Buddy Chatbot
         </div>
@@ -129,7 +148,8 @@
 
         <!-- Chat Footer -->
         <div class="chat-footer">
-            <form action="/ask" method="POST" style="display: flex; width: 100%;">
+            <form action="{{ url_for('chatbot.ask') }}" method="POST"
+ style="display: flex; width: 100%;">
                 <input type="text" name="question" class="chat-input" placeholder="Type your message..." required>
                 <button type="submit" class="send-btn">Send</button>
             </form>

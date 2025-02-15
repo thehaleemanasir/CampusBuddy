@@ -1,10 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Register Page</title>
 </head>
 <body>
-$END$
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<form method="POST" action="{{ url_for('auth.register') }}">
+    <label>Name:</label>
+    <input type="text" name="name" required>
+
+    <label>Email:</label>
+    <input type="email" name="email" required>
+
+    <label>Password:</label>
+    <input type="password" name="password" required>
+
+    <label>Confirm Password:</label>
+    <input type="password" name="confirm_password" required>
+
+    <p><strong>Password must:</strong></p>
+<ul>
+    <li>Be at least 6 characters long</li>
+    <li>Contain at least one uppercase letter</li>
+    <li>Contain at least one special character</li>
+</ul>
+
+
+    <button type="submit">Register</button>
+</form>
+
+<p>Already have an account? <a href="{{ url_for('auth.login') }}">Login here</a></p>
+
+
 </body>
 </html>

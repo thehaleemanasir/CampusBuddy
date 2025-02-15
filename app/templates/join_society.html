@@ -11,7 +11,7 @@
         <h1 class="text-center">Join a Society</h1>
 
         <!-- Form -->
-        <form method="GET" action="/join_society" class="mt-4">
+        <form method="GET" action="{{ url_for('society.join_society') }}" class="mt-4">
             <!-- Campus Dropdown -->
             <div class="mb-3">
                 <label for="campus" class="form-label">Select Campus:</label>
@@ -27,7 +27,7 @@
         </form>
 
         <!-- Society Dropdown -->
-        <form method="POST" action="/join_society" class="mt-4">
+        <form method="POST" action="{{ url_for('society.join_society') }}" class="mt-4">
             <div class="mb-3">
                 <label for="society" class="form-label">Select Society:</label>
                 <select id="society" name="society" class="form-select" required>

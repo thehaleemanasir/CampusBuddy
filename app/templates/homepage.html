@@ -8,18 +8,40 @@
 </head>
 <body>
     <!-- Navigation Bar -->
-    <nav>
-        <ul>
-            <li><a href="{{ url_for('homepage') }}">Home</a></li>
-            <li><a href="/chatbot">Go to Chatbot</a></li>
-           <li><a href="{{ url_for('society_club') }}">Society & Clubs</a></li>
-           <li><a href="{{ url_for('academic_support') }}">Academic Support</a></li>
-            <li><a href="{{ url_for('mental_health') }}">Mental Health</a></li>
-            <li><a href="{{ url_for('events') }}">Events</a></li>
-            <li><a href="{{ url_for('social_networking') }}">Social Media</a></li>
-            <li><a href="{{ url_for('about') }}">About</a></li>
-        </ul>
-    </nav>
+  <nav>
+    <ul>
+        <li><a href="{{ url_for('home.homepage') }}">Home</a></li>
+        <li><a href="{{ url_for('home.academic_support') }}">Academic Support</a></li>
+
+        {% if "user_id" in session %}
+            <li><a href="{{ url_for('canteen.canteen_menu') }}">Canteen Menu</a></li>
+            {% if session["role"] in ["canteen_admin", "canteen_staff"] %}
+                <li><a href="{{ url_for('canteen.canteen_staff') }}">Manage Canteen</a></li>
+            {% endif %}
+            <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+        {% else %}
+            <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+        {% endif %}
+
+        <li><a href="{{ url_for('home.mental_health') }}">Mental Health</a></li>
+        <li><a href="{{ url_for('home.events') }}">Events</a></li>
+        <li><a href="{{ url_for('home.social_networking') }}">Social Media</a></li>
+        <li><a href="{{ url_for('home.about') }}">About</a></li>
+        <li><a href="{{ url_for('society.society_club') }}">Society & Clubs</a></li>
+        <li><a href="{{ url_for('chatbot.chatbot') }}">Go to Chatbot</a></li>
+        {% if session['user_id'] %}
+            <li><a href="{{ url_for('profile.view_profile') }}">👤 {{ session['user_name'] }}</a></li>
+            <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+        {% else %}
+            <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+            <li><a href="{{ url_for('auth.register') }}">Register</a></li>
+        {% endif %}
+
+    </ul>
+</nav>
+
+
+
 
     <!-- Welcome Section -->
     <header>
@@ -31,11 +53,11 @@
     <section>
         <h2>Explore Campus Buddy</h2>
         <ul>
-            <li><a href="{{ url_for('society_club') }}">Find Societies & Clubs</a></li>
-           <li><a href="{{ url_for('academic_support') }}">Get Academic Support</a></li>
-            <li><a href="{{ url_for('mental_health') }}">Access Wellness Resources</a></li>
-            <li><a href="{{ url_for('events') }}">Discover Events</a></li>
-            <li><a href="{{ url_for('social_networking') }}">Follow Us on Social Media</a></li>
+            <li><a href="{{ url_for('society.society_club') }}">Find Societies & Clubs</a></li>
+            <li><a href="{{ url_for('home.academic_support') }}">Get Academic Support</a></li>
+            <li><a href="{{ url_for('home.mental_health') }}">Access Wellness Resources</a></li>
+            <li><a href="{{ url_for('home.events') }}">Discover Events</a></li>
+            <li><a href="{{ url_for('home.social_networking') }}">Follow Us on Social Media</a></li>
         </ul>
     </section>
 

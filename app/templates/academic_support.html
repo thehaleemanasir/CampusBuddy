@@ -1,10 +1,133 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Academic Support</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Support & Resources</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .section-header {
+            background: linear-gradient(to right, #007bff, #00c6ff);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .card {
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .accordion-button {
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-    <h1>Academic Support Hub</h1>
-    <p>This page provides resources for academic support.</p>
+    <div class="container mt-4">
+        <div class="section-header">
+            <h1>📖 Academic Support & Resources</h1>
+            <p>Find key academic support services, funding opportunities, study abroad programs, and FAQs all in one place.</p>
+        </div>
+
+        <!-- Fees & Grants and Scholarships Section -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">📌 Fees & Grants Info</div>
+                    <div class="card-body">
+                        <p>Understanding the financial aspects of your education is crucial. TUS provides comprehensive information to assist you.</p>
+                        <ul>
+                            <li><strong>Fee Structure:</strong> <a href="https://tus.ie/grants-fees/" target="_blank">Visit here</a></li>
+                            <li><strong>Payment Methods:</strong> Various options available.</li>
+                            <li><strong>Grants:</strong> Eligibility criteria and application details included.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-success text-white">📌 Scholarships Info</div>
+                    <div class="card-body">
+                        <p>Various scholarships are available to financially support students.</p>
+                        <ul>
+                            <li>1916 Bursary</li>
+                            <li>TUS Student Assistance Fund</li>
+                            <li>Sports Scholarships</li>
+                            <li>Leaders at TUS Scholarships</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 1916 Bursary FAQ -->
+        <div class="card mt-4">
+            <div class="card-header bg-secondary text-white">1916 Bursary - Frequently Asked Questions</div>
+            <div class="card-body">
+                <div class="accordion" id="bursaryFaq">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#bursary1">Who can apply?</button>
+                        </h2>
+                        <div id="bursary1" class="accordion-collapse collapse" data-bs-parent="#bursaryFaq">
+                            <div class="accordion-body">Students with a household income under €25,000 can apply.</div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#bursary2">How do I apply?</button>
+                        </h2>
+                        <div id="bursary2" class="accordion-collapse collapse" data-bs-parent="#bursaryFaq">
+                            <div class="accordion-body">Applications must be submitted online with supporting documents.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Student Assistance Fund FAQ -->
+        <div class="card mt-4">
+            <div class="card-header bg-info text-white">Student Assistance Fund (SAF) - FAQs</div>
+            <div class="card-body">
+                <div class="accordion" id="safFaq">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#saf1">Who can apply?</button>
+                        </h2>
+                        <div id="saf1" class="accordion-collapse collapse" data-bs-parent="#safFaq">
+                            <div class="accordion-body">Full-time and part-time students facing financial hardship.</div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#saf2">How often can I apply?</button>
+                        </h2>
+                        <div id="saf2" class="accordion-collapse collapse" data-bs-parent="#safFaq">
+                            <div class="accordion-body">One application per academic year.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Erasmus+ & Study Abroad Opportunities -->
+        <div class="card mt-4">
+            <div class="card-header bg-warning text-dark">📌 Erasmus+ & Study Abroad</div>
+            <div class="card-body">
+                <p>Opportunities to study or work abroad through the Erasmus+ programme.</p>
+                <ul>
+                    <li>EU Nationals: Study at partner institutions, internships available.</li>
+                    <li>Non-EU Students: Exchange programs and scholarships.</li>
+                </ul>
+                <p>For more details, visit the <a href="https://tus.ie/global/erasmus/students/" target="_blank">TUS Global Office</a>.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

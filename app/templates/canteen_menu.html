@@ -1,10 +1,175 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canteen Menu - TUS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- FontAwesome for Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Bootstrap JS (for responsive collapse & dropdowns) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
 </head>
-<body>
-$END$
+<body class="bg-light">
+         <!-- Responsive Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: RGB(33, 33, 33); padding: 1rem 2rem; font-size: 20px">
+    <div class="container-fluid">
+        <!-- Logo -->
+        <a class="navbar-brand d-flex align-items-center" href="{{ url_for('home.homepage') }}">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="TUS Logo" height="220" width="500" class="me-2">
+        </a>
+
+        <!-- Mobile Menu Toggle -->
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars text-light"></i>
+        </button>
+
+        <!-- Navbar Links -->
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav align-items-center" >
+                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('home.homepage') }}">Home</a></li>
+                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('home.about') }}">About</a></li>
+                <li class="nav-item"><a class="nav-link text-white px-3 active-page" href="{{ url_for('canteen.canteen_menu') }}">Canteen Menu</a></li>
+                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('society.society_club') }}">Society & Clubs</a></li>
+                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('home.academic_support') }}">Academic Support</a></li>
+                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('home.mental_health') }}">Mental Health</a></li>
+                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('home.events') }}">Events</a></li>
+                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('home.social_networking') }}">Social Media</a></li>
+
+                <!-- Profile Dropdown (Only for Logged-in Users) -->
+                {% if 'user_id' in session %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white px-3" href="#" id="userDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        👤 Profile
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" style="background-color: #16213E;">
+                        <li><a class="dropdown-item text-light" href="{{ url_for('profile.view_profile') }}">
+                            <i class="fas fa-user"></i> View Profile</a></li>
+                        <li><hr class="dropdown-divider bg-light"></li>
+                        <li><a class="dropdown-item text-danger" href="{{ url_for('auth.logout') }}">
+                            <i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                    </ul>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+    <div class="container my-5">
+        <h1 class="text-center">Canteen Menu</h1>
+        <p class="text-center">Explore the dining options available across TUS campuses.</p>
+
+        <!-- Search Bar & Price Filter -->
+        <form method="GET" action="{{ url_for('canteen.canteen_menu') }}" class="mb-4">
+            <div class="row">
+                <!-- Campus Filter -->
+                <div class="col-md-4">
+                    <label for="campus-select" class="form-label">Select Campus:</label>
+                    <select id="campus-select" name="campus" class="form-select" onchange="this.form.submit()">
+                        <option value="">All Campuses</option>
+                        {% for campus in campuses %}
+                            <option value="{{ campus.campus }}" {% if selected_campus == campus.campus %}selected{% endif %}>
+                                {{ campus.campus }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="col-md-4">
+                    <label for="search-query" class="form-label">Search Menu:</label>
+                    <input type="text" id="search-query" name="search" class="form-control" placeholder="Search by name, description..." value="{{ search_query }}">
+                </div>
+
+                <!-- Price Filter -->
+                <div class="col-md-4">
+                    <label for="price-filter" class="form-label">Sort by Price:</label>
+                    <select id="price-filter" name="price" class="form-select" onchange="this.form.submit()">
+                        <option value="">Default</option>
+                        <option value="low" {% if price_filter =='low' %}selected{% endif %}>Low to High</option>
+                        <option value="high" {% if price_filter =='high' %}selected{% endif %}>High to Low</option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Apply Filters</button>
+        </form>
+
+        {% if search_query or price_filter %}
+<div class="table-responsive mt-4">
+    <h3 class="border-bottom pb-2">Menu Results</h3>
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Item Name</th>
+                <th>Description</th>
+                <th>Meal Type</th>
+                <th>Price (€)</th>
+                <th>Dietary</th>
+                <th>Campus</th>
+                <th>Outlet</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if menu_items %}
+                {% for item in menu_items %}
+                <tr>
+                    <td>{{ item.item_name }}</td>
+                    <td>{{ item.description }}</td>
+                    <td>{{ item.meal_type }}</td>
+                    <td>€{{ item.price }}</td>
+                    <td>{{ item.dietary }}</td>
+                    <td>{{ item.campus }}</td>
+                    <td>
+                        <a href="{{ url_for('canteen.outlet_details', outlet_name=item.outlet) }}" class="text-decoration-none fw-bold">
+                            {{ item.outlet }}
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr><td colspan="7" class="text-center text-muted">No menu items match your search.</td></tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+
+{% endif %}
+
+
+        {% for campus in catering_facilities %}
+        <section class="mb-5">
+            <h2 class="text-center">{{ campus.campus }} Campus</h2>
+            <div class="row">
+                {% for outlet in campus. outlets %}
+                <div class="col-md-4">
+                    <div class="card shadow-sm mb-4">
+                        <img src="{{ outlet.image_url }}" class="card-img-top" alt="{{ outlet.name }}">
+                        <div class="card-body text-center">
+                            <h5 class="card-title fw-bold">
+                                <a href="{{ url_for('canteen.outlet_details', outlet_name=outlet.name) }}" class="text-decoration-none">{{ outlet.name }}</a>
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endfor %}
+
+        <p>For catering inquiries, visit the <a href="https://tus.ie/campus-services-capital-development/services/midwest-catering/">Midwest Catering Services</a></p>
+
+    </div>
+
+    <footer class="text-center mt-5 p-4" style="background-color: RGB(33, 33, 33); color:white">
+        <p>© 2025 Campus Buddy. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

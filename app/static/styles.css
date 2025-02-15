@@ -8,7 +8,7 @@ body {
 
 nav ul {
     list-style: none;
-    background: #007bff;
+    background: RGB(33, 33, 33);
     padding: 1rem;
     display: flex;
     justify-content: space-around;

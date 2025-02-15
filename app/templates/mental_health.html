@@ -1,10 +1,61 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Mental Health Resources</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mental Health Support - Campus Buddy</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <h1>Mental Health Resources</h1>
-    <p>This page offers resources for mental health and wellness.</p>
+    <header>
+        <h1>Mental Health Support</h1>
+        <p>Your well-being matters. Explore resources, self-help guides, and support contacts.</p>
+    </header>
+
+
+<section>
+    <h2>Emergency Contacts</h2>
+    <ul>
+        {% for contact in mental_health_data %}
+            {% if contact.category == 'emergency' %}
+                <li><strong>{{ contact.name }}</strong>:
+                    {% if contact.phone %} Call {{ contact.phone }} | {% endif %}
+                    {% if contact.website %} <a href="{{ contact.website }}">Website</a> {% endif %}
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</section>
+
+<section>
+    <h2>Self-Help & Well-being Tips</h2>
+    <ul>
+        {% for resource in mental_health_data %}
+            {% if resource.category == 'self_help' %}
+                <li><a href="{{ resource.link }}">{{ resource.title }}</a></li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</section>
+
+<section>
+    <h2>Helpful Videos</h2>
+    {% for video in mental_health_data %}
+        {% if video.category == 'video' %}
+            <iframe width="560" height="315" src="{{ video.link }}" frameborder="0" allowfullscreen></iframe>
+        {% endif %}
+    {% endfor %}
+</section>
+
+
+    <section>
+        <h2>Mental Health Chatbot</h2>
+        <p>Need someone to talk to? Try our mental health chatbot for guidance and resources.</p>
+        <button onclick="window.location.href='/chatbot'">Chat Now</button>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Campus Buddy. All rights reserved.</p>
+    </footer>
 </body>
 </html>

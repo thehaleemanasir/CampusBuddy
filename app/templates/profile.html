@@ -1,10 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
 </head>
 <body>
-$END$
+    <h2>👤 User Profile</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <p><strong>Name:</strong> {{ user.name }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+
+<h3>Change Password</h3>
+<form method="POST" action="{{ url_for('profile.change_password') }}">
+    <label>Current Password:</label>
+    <input type="password" name="current_password" required>
+
+    <label>New Password:</label>
+    <input type="password" name="new_password" required>
+
+    <label>Confirm New Password:</label>
+    <input type="password" name="confirm_password" required>
+
+    <button type="submit">Update Password</button>
+</form>
+
+
+    <a href="{{ url_for('home.homepage') }}">Back to Home</a>
 </body>
 </html>
