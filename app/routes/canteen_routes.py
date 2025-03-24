@@ -8,7 +8,7 @@ from flask_login import login_required, current_user
 
 canteen_bp = Blueprint('canteen', __name__, template_folder='templates')
 
-#✅ API for Fetching Canteen Data (JavaScript will call this)
+#API for Fetching Canteen Data
 from flask import Blueprint, render_template, request, session, flash, redirect, url_for
 from database import canteen_menu_collection, db
 
@@ -65,7 +65,7 @@ def canteen_menu():
 
 @canteen_bp.route('/canteen-staff', methods=['GET', 'POST'])
 def canteen_staff():
-    # ✅ Ensure only canteen staff or admin can access
+    # Ensure only canteen staff or admin can access
     if "user_id" not in session or session.get("role") not in ["canteen_staff", "canteen_admin"]:
         flash("Access Denied: Only canteen staff can modify the menu.", "danger")
         return redirect(url_for("auth.login"))
@@ -87,15 +87,15 @@ def canteen_staff():
             "dietary": dietary,
             "campus": campus,
             "outlet": outlet,
-            "archived": False  # ✅ Ensure new items are not archived by default
+            "archived": False
         })
-        flash('✅ Menu item added successfully!', 'success')
+        flash('Menu item added successfully!', 'success')
         return redirect(url_for('canteen.canteen_staff'))
 
-    # ✅ Fetch campuses & outlets dynamically
+    #  Fetch campuses & outlets dynamically
     campuses = list(canteen_facilities_collection.find({}, {"_id": 0, "campus": 1, "outlets.name": 1}))
 
-    # ✅ Fetch menu items from MongoDB
+    #  Fetch menu items from MongoDB
     menu_items = list(canteen_menu_collection.find({}))
 
     return render_template('canteen_staff.html', campuses=campuses, menu_items=menu_items)
@@ -126,7 +126,7 @@ def outlet_details(outlet_name):
     )
 
 
-# ✅ Edit Menu Item
+#  Edit Menu Item
 @canteen_bp.route('/edit-menu-item/<item_id>', methods=['GET', 'POST'])
 def edit_menu_item(item_id):
     item = canteen_menu_collection.find_one({"_id": ObjectId(item_id)})
@@ -150,26 +150,26 @@ def edit_menu_item(item_id):
 
     campuses = list(canteen_facilities_collection.find({}, {"_id": 0, "campus": 1, "outlets.name": 1}))
 
-    # ✅ Fetch menu items from MongoDB
+    #  Fetch menu items from MongoDB
     menu_items = list(canteen_menu_collection.find({}))
 
     return render_template("edit_menu_item.html", item=item, campuses=campuses, menu_items=menu_items)
 
-# ✅ Archive Menu Item
+#  Archive Menu Item
 @canteen_bp.route('/archive-menu-item/<item_id>')
 def archive_menu_item(item_id):
     canteen_menu_collection.update_one({"_id": ObjectId(item_id)}, {"$set": {"archived": True}})
     flash("📂 Menu item archived!", "info")
     return redirect(url_for('canteen.canteen_staff'))
 
-# ✅ Unarchive Menu Item
+#  Unarchive Menu Item
 @canteen_bp.route('/unarchive-menu-item/<item_id>')
 def unarchive_menu_item(item_id):
     canteen_menu_collection.update_one({"_id": ObjectId(item_id)}, {"$set": {"archived": False}})
     flash("✅ Menu item unarchived!", "success")
     return redirect(url_for('canteen.canteen_staff'))
 
-# ✅ Delete Menu Item
+# Delete Menu Item
 @canteen_bp.route('/delete-menu-item/<item_id>')
 def delete_menu_item(item_id):
     canteen_menu_collection.delete_one({"_id": ObjectId(item_id)})

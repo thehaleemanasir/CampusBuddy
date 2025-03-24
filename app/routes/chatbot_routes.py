@@ -1,54 +1,73 @@
-import datetime
-from flask import Blueprint, render_template, request, redirect
-from database import chat_history_collection
-import openai
-import os
+import json
+import requests
+from flask import Blueprint, request, jsonify
+from bs4 import BeautifulSoup
+from sentence_transformers import SentenceTransformer, util
 
-# **HARD-CODE OpenAI API Key for Debugging (Replace with actual key)**
-OPENAI_API_KEY = "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"
+chatbot_bp = Blueprint("chatbot", __name__, url_prefix="/chatbot")
 
-chatbot_bp = Blueprint('chatbot', __name__, template_folder="../templates")
+# Load Sentence-BERT model
+model = SentenceTransformer('all-MiniLM-L6-v2')
 
-@chatbot_bp.route("/chatbot")
-def chatbot():
-    chat_history = list(chat_history_collection.find({}, {"_id": 0}))
-    return render_template("chatbot.html", chat_history=chat_history)
+# Load links
+with open("links.json", "r", encoding="utf-8") as f:
+    all_links = json.load(f)
 
-@chatbot_bp.route("/ask", methods=["POST"])
-def ask():
-    question = request.form.get("question", "").strip()
+# Prepare text for embeddings
+link_texts = [entry["title"] + " " + " ".join(entry.get("keywords", [])) for entry in all_links]
+link_embeddings = model.encode(link_texts, convert_to_tensor=True)
 
-    if not question:
-        return redirect("/chatbot")
+# --- Helper Functions ---
 
+def is_faq_query(query):
+    faq_keywords = ["how", "what", "can i", "when", "where", "faq", "apply", "eligibility", "who", "do i need"]
+    return any(word in query.lower() for word in faq_keywords)
+
+def find_best_link_semantic(query):
+    query_embedding = model.encode(query, convert_to_tensor=True)
+    cosine_scores = util.cos_sim(query_embedding, link_embeddings)[0]
+    best_index = cosine_scores.argmax().item()
+    best_score = cosine_scores[best_index].item()
+    if best_score >= 0.4:
+        return all_links[best_index]
+    return None
+
+def scrape_faq_answer(url):
     try:
-        print(f"🔍 Received Question: {question}")  # Debugging
-
-        # **Make a direct request to OpenAI API**
-        openai.api_key = OPENAI_API_KEY
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=[{"role": "system", "content": "You are a helpful assistant."},
-                      {"role": "user", "content": question}]
-        )
-
-        bot_response = response["choices"][0]["message"]["content"]
-        print(f" OpenAI Response: {bot_response}")  # Debugging
-
-        # **Save chat history in MongoDB**
-        chat_history_collection.insert_one({
-            "sender": "user",
-            "message": question,
-            "timestamp": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        })
-        chat_history_collection.insert_one({
-            "sender": "bot",
-            "message": bot_response,
-            "timestamp": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        })
-
+        headers = {'User-Agent': 'Mozilla/5.0'}
+        res = requests.get(url, headers=headers, timeout=10)
+        soup = BeautifulSoup(res.text, 'html.parser')
+        content = soup.find('main') or soup.find('article') or soup
+        for p in content.find_all("p"):
+            text = p.get_text(strip=True)
+            if text and len(text) > 40:
+                return text
     except Exception as e:
-        print(f"Error in ask(): {e}")  # Debugging
-        return "Error processing request", 500
+        print("Scraping failed:", e)
+    return None
 
-    return redirect("/chatbot")
+# --- Main Route ---
+
+@chatbot_bp.route("", methods=["POST"])
+def chatbot():
+    data = request.json
+    query = data.get("query", "").strip()
+
+    if not query:
+        return jsonify({"reply": "❗ Please enter a question."})
+
+    best_match = find_best_link_semantic(query)
+
+    if best_match:
+        if is_faq_query(query):
+            answer = scrape_faq_answer(best_match["url"])
+            if answer:
+                return jsonify({
+                    "reply": f"{answer}\n\n🔗 <a href='{best_match['url']}' target='_blank'>{best_match['title']}</a>"
+                })
+
+        return jsonify({
+            "reply": f"Here’s what I found:\n🔗 <a href='{best_match['url']}' target='_blank'>{best_match['title']}</a>"
+        })
+
+    return jsonify({"reply": "⚠️ Sorry, I couldn't find anything. Try rephrasing your question."})

@@ -1,39 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>User Profile - Campus Buddy</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(to right, rgba(128, 100, 0, 0.85), #1b1818);
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    .profile-container {
+      background-color: #fff;
+      padding: 40px;
+      margin: 60px auto;
+      max-width: 700px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #1b1818;
+    }
+
+    .btn-theme {
+      background-color: #1b1818;
+      color: white;
+      border: none;
+    }
+
+    .btn-theme:hover {
+      background-color: rgba(128, 100, 0, 0.9);
+    }
+
+    label {
+      font-weight: 600;
+    }
+
+    footer {
+      background-color: #1b1818;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+    }
+  </style>
 </head>
 <body>
-    <h2>👤 User Profile</h2>
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            {% for category, message in messages %}
-                <div class="alert alert-{{ category }}">{{ message }}</div>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
+<div class="container profile-container">
+  <h2 class="section-title">👤 User Profile</h2>
 
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <div class="mb-4">
     <p><strong>Name:</strong> {{ user.name }}</p>
     <p><strong>Email:</strong> {{ user.email }}</p>
+  </div>
 
-<h3>Change Password</h3>
-<form method="POST" action="{{ url_for('profile.change_password') }}">
-    <label>Current Password:</label>
-    <input type="password" name="current_password" required>
+  <h4 class="mb-3">🔐 Change Password</h4>
+  <form method="POST" action="{{ url_for('profile.change_password') }}">
+    <div class="mb-3">
+      <label for="current_password">Current Password:</label>
+      <input type="password" class="form-control" id="current_password" name="current_password" required>
+    </div>
 
-    <label>New Password:</label>
-    <input type="password" name="new_password" required>
+    <div class="mb-3">
+      <label for="new_password">New Password:</label>
+      <input type="password" class="form-control" id="new_password" name="new_password" required>
+    </div>
 
-    <label>Confirm New Password:</label>
-    <input type="password" name="confirm_password" required>
+    <div class="mb-4">
+      <label for="confirm_password">Confirm New Password:</label>
+      <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+    </div>
 
-    <button type="submit">Update Password</button>
-</form>
+    <button type="submit" class="btn btn-theme w-100">Update Password</button>
+  </form>
 
+  <div class="text-center mt-4">
+    <a href="{{ url_for('home.homepage') }}" class="btn btn-outline-dark">🏠 Back to Home</a>
+  </div>
+</div>
 
-    <a href="{{ url_for('home.homepage') }}">Back to Home</a>
+<footer>
+  &copy; {{ current_year }} Campus Buddy. All rights reserved.
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

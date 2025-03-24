@@ -3,7 +3,7 @@ from flask import Blueprint, render_template
 # The blueprint name is 'home'
 home_bp = Blueprint('home', __name__, template_folder="../templates")
 
-@home_bp.route('/')
+@home_bp.route('/home')
 def homepage():
     return render_template('homepage.html')
 
@@ -39,3 +39,5 @@ def about():
 @home_bp.route('/map')
 def map_page():
     return render_template('map.html')
+
+

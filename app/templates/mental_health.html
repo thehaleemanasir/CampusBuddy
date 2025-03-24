@@ -1,61 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mental Health Support - Campus Buddy</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <meta charset="UTF-8">
+  <title>Mental Health Support - Campus Buddy</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(to right, rgba(128, 100, 0, 0.79), #1b1818);
+      font-family: Arial, sans-serif;
+      padding: 40px;
+    }
+    .card {
+      margin-bottom: 20px;
+    }
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      color: white;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Mental Health Support</h1>
-        <p>Your well-being matters. Explore resources, self-help guides, and support contacts.</p>
-    </header>
 
+<h1 class="text-center text-light mb-5">🧠 Mental Health Support</h1>
 
-<section>
-    <h2>Emergency Contacts</h2>
-    <ul>
-        {% for contact in mental_health_data %}
-            {% if contact.category == 'emergency' %}
-                <li><strong>{{ contact.name }}</strong>:
-                    {% if contact.phone %} Call {{ contact.phone }} | {% endif %}
-                    {% if contact.website %} <a href="{{ contact.website }}">Website</a> {% endif %}
-                </li>
-            {% endif %}
-        {% endfor %}
-    </ul>
-</section>
-
-<section>
-    <h2>Self-Help & Well-being Tips</h2>
-    <ul>
-        {% for resource in mental_health_data %}
-            {% if resource.category == 'self_help' %}
-                <li><a href="{{ resource.link }}">{{ resource.title }}</a></li>
-            {% endif %}
-        {% endfor %}
-    </ul>
-</section>
-
-<section>
-    <h2>Helpful Videos</h2>
-    {% for video in mental_health_data %}
-        {% if video.category == 'video' %}
-            <iframe width="560" height="315" src="{{ video.link }}" frameborder="0" allowfullscreen></iframe>
-        {% endif %}
+<div class="container">
+  {% if support %}
+    {% for item in support %}
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{ item.name }}</h5>
+          <p><strong>Category:</strong> {{ item.category }}</p>
+          {% if item.phone %}
+            <p><strong>Phone:</strong> {{ item.phone }}</p>
+          {% endif %}
+          {% if item.website %}
+            <a href="{{ item.website }}" target="_blank" class="btn btn-outline-success btn-sm">Visit Website</a>
+          {% endif %}
+        </div>
+      </div>
     {% endfor %}
-</section>
+  {% else %}
+    <p class="text-white">No resources available right now.</p>
+  {% endif %}
+</div>
 
 
-    <section>
-        <h2>Mental Health Chatbot</h2>
-        <p>Need someone to talk to? Try our mental health chatbot for guidance and resources.</p>
-        <button onclick="window.location.href='/chatbot'">Chat Now</button>
-    </section>
 
-    <footer>
-        <p>&copy; 2025 Campus Buddy. All rights reserved.</p>
-    </footer>
+
+<footer class="bg-dark p-3">
+  &copy; {{ current_year }} Campus Buddy
+</footer>
+
 </body>
 </html>

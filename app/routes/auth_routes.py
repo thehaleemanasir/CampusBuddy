@@ -38,7 +38,7 @@ def register():
         email = request.form.get("email").strip()
         password = request.form.get("password")
 
-        # ✅ Prevent registration of canteen staff manually
+        # Prevent registration of canteen staff manually
         if email.endswith("@canteen.tus.ie"):
             flash("Canteen staff cannot self-register. Please contact the admin.", "danger")
             return redirect(url_for("auth.login"))
@@ -48,13 +48,13 @@ def register():
             flash("Email is already registered. Please log in.", "danger")
             return redirect(url_for("auth.login"))
 
-        # ✅ Hash the password using Flask-Bcrypt before storing
+        # Hash the password using Flask-Bcrypt before storing
         hashed_password = bcrypt.generate_password_hash(password).decode("utf-8")
 
         users_collection.insert_one({
             "name": name,
             "email": email,
-            "password": hashed_password,  # Store hashed password
+            "password": hashed_password,
             "role": "student"
         })
 
@@ -76,7 +76,7 @@ def login():
             flash("Invalid email or password!", "danger")
             return redirect(url_for("auth.login"))
 
-        # ✅ Validate hashed password using Flask-Bcrypt
+        # Validate hashed password using Flask-Bcrypt
         if check_password_hash(user_data["password"], password):
             session["user_id"] = str(user_data["_id"])  # Store user in session
             session["email"] = user_data["email"]
@@ -84,7 +84,7 @@ def login():
 
             flash("Login successful!", "success")
 
-            # ✅ Redirect based on role
+            # Redirect based on role
             if session["role"] in ["canteen_staff", "canteen_admin"]:
                 return redirect(url_for("canteen.canteen_staff"))
             return redirect(url_for("home.homepage"))

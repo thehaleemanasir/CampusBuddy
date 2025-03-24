@@ -1,0 +1,58 @@
+{
+  "faq": {
+    "eligibility": [
+      {
+        "question": "Who can apply for the SAF?",
+        "answer": "Full-time and part-time students registered in courses leading to a Level 6-10 higher education award are eligible. Applicants must provide proof of receiving a SUSI grant, a means-tested social welfare payment, or be a HEAR student. More details: https://tus.ie/student-assistance-fund"
+      }
+    ],
+    "application_process": [
+      {
+        "question": "How do I apply for the SAF?",
+        "answer": "Complete the online application form and upload supporting documentation. Hard copies are not accepted."
+      },
+      {
+        "question": "How often can I apply for the SAF?",
+        "answer": "Only one application per academic year is allowed."
+      },
+      {
+        "question": "How is my SAF application assessed?",
+        "answer": "Applications are reviewed individually by a subcommittee of the Student Assistance Fund Committee based on submitted evidence."
+      }
+    ],
+    "payments": [
+      {
+        "question": "How will I receive my SAF payment?",
+        "answer": "Payments are made by electronic fund transfer (EFT) to the bank details provided."
+      },
+      {
+        "question": "When will I be notified about the outcome of my SAF application?",
+        "answer": "You will receive an email to your student account after all applications have been reviewed."
+      }
+    ],
+    "appeals": [
+      {
+        "question": "Can I appeal if my SAF application is not approved?",
+        "answer": "Yes, you can request a review by emailing saf.midlands@tus.ie"
+      }
+    ],
+    "eligibility_repeats": [
+      {
+        "question": "Can I apply for the SAF if I am repeating a year?",
+        "answer": "Yes, repeat students attending modules can apply. However, students registered for repeat exams only are not eligible."
+      }
+    ],
+    "required_documents": [
+      {
+        "question": "What documents do I need to provide for the SAF?",
+        "answer": "Documents include a SUSI award letter, proof of social welfare payments, or confirmation of HEAR student status."
+      }
+    ],
+    "deadlines": [
+      {
+        "question": "When is the SAF application deadline?",
+        "answer": "Semester 1 applications close on October 31, 2024, at 5 PM. Semester 2 applications close on February 21, 2025, at 5 PM."
+      }
+    ]
+  }
+}

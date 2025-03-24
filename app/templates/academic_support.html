@@ -1,133 +1,226 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academic Support & Resources</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
-        .section-header {
-            background: linear-gradient(to right, #007bff, #00c6ff);
-            color: white;
-            padding: 20px;
-            text-align: center;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
-        .card {
-            border-radius: 10px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .accordion-button {
-            font-weight: bold;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Academic Support - Campus Buddy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Bootstrap JS (for responsive collapse & dropdowns) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, rgba(128, 100, 0, 0.85), #1b1818);
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar {
+      background-color: #1b1818;
+    }
+
+    .navbar-brand {
+      color: rgba(255, 204, 0, 0.9);
+      font-weight: bold;
+      font-size: 24px;
+    }
+
+    .navbar-nav .nav-link {
+      color: white;
+    }
+
+    .navbar-nav .nav-link:hover {
+      color: rgba(255, 204, 0, 0.9);
+    }
+
+    .hero {
+      background-color: white;
+      padding: 60px 30px;
+      text-align: center;
+      border-radius: 0 0 25px 25px;
+      animation: slideDown 1s ease-out;
+    }
+
+    .hero h1 {
+      color: #1b1818;
+      font-size: 36px;
+      font-weight: bold;
+    }
+
+    .hero p {
+      color: #444;
+      font-size: 18px;
+    }
+
+    @keyframes slideDown {
+      0% { transform: translateY(-30px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    .card {
+      border-radius: 10px;
+      transition: transform 0.2s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .section {
+      background: white;
+      padding: 40px 30px;
+      border-radius: 15px;
+      margin-bottom: 40px;
+      animation: fadeInUp 0.8s ease;
+    }
+
+    @keyframes fadeInUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    footer {
+      background-color: #1b1818;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .accordion-button {
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
-    <div class="container mt-4">
-        <div class="section-header">
-            <h1>📖 Academic Support & Resources</h1>
-            <p>Find key academic support services, funding opportunities, study abroad programs, and FAQs all in one place.</p>
-        </div>
 
-        <!-- Fees & Grants and Scholarships Section -->
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header bg-primary text-white">📌 Fees & Grants Info</div>
-                    <div class="card-body">
-                        <p>Understanding the financial aspects of your education is crucial. TUS provides comprehensive information to assist you.</p>
-                        <ul>
-                            <li><strong>Fee Structure:</strong> <a href="https://tus.ie/grants-fees/" target="_blank">Visit here</a></li>
-                            <li><strong>Payment Methods:</strong> Various options available.</li>
-                            <li><strong>Grants:</strong> Eligibility criteria and application details included.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header bg-success text-white">📌 Scholarships Info</div>
-                    <div class="card-body">
-                        <p>Various scholarships are available to financially support students.</p>
-                        <ul>
-                            <li>1916 Bursary</li>
-                            <li>TUS Student Assistance Fund</li>
-                            <li>Sports Scholarships</li>
-                            <li>Leaders at TUS Scholarships</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <!-- 1916 Bursary FAQ -->
-        <div class="card mt-4">
-            <div class="card-header bg-secondary text-white">1916 Bursary - Frequently Asked Questions</div>
-            <div class="card-body">
-                <div class="accordion" id="bursaryFaq">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#bursary1">Who can apply?</button>
-                        </h2>
-                        <div id="bursary1" class="accordion-collapse collapse" data-bs-parent="#bursaryFaq">
-                            <div class="accordion-body">Students with a household income under €25,000 can apply.</div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#bursary2">How do I apply?</button>
-                        </h2>
-                        <div id="bursary2" class="accordion-collapse collapse" data-bs-parent="#bursaryFaq">
-                            <div class="accordion-body">Applications must be submitted online with supporting documents.</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: RGB(33, 33, 33); padding: 1rem 1rem; font-size: 15px">
+    <div class="container-fluid">
+        <!-- Logo -->
+        <a class="navbar-brand d-flex align-items-center" href="{{ url_for('home.homepage') }}">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="TUS Logo" height="180" width="350" class="me-2">
+        </a>
 
-        <!-- Student Assistance Fund FAQ -->
-        <div class="card mt-4">
-            <div class="card-header bg-info text-white">Student Assistance Fund (SAF) - FAQs</div>
-            <div class="card-body">
-                <div class="accordion" id="safFaq">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#saf1">Who can apply?</button>
-                        </h2>
-                        <div id="saf1" class="accordion-collapse collapse" data-bs-parent="#safFaq">
-                            <div class="accordion-body">Full-time and part-time students facing financial hardship.</div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#saf2">How often can I apply?</button>
-                        </h2>
-                        <div id="saf2" class="accordion-collapse collapse" data-bs-parent="#safFaq">
-                            <div class="accordion-body">One application per academic year.</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!-- Mobile Menu Toggle -->
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars text-light"></i>
+        </button>
 
-        <!-- Erasmus+ & Study Abroad Opportunities -->
-        <div class="card mt-4">
-            <div class="card-header bg-warning text-dark">📌 Erasmus+ & Study Abroad</div>
-            <div class="card-body">
-                <p>Opportunities to study or work abroad through the Erasmus+ programme.</p>
-                <ul>
-                    <li>EU Nationals: Study at partner institutions, internships available.</li>
-                    <li>Non-EU Students: Exchange programs and scholarships.</li>
-                </ul>
-                <p>For more details, visit the <a href="https://tus.ie/global/erasmus/students/" target="_blank">TUS Global Office</a>.</p>
-            </div>
+        <!-- Navbar Links -->
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav align-items-center" >
+                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('home.homepage') }}">Home</a></li>
+              <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('chatbot.chatbot') }}">Chatbot</a></li>
+                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('home.about') }}">About</a></li>
+                <li class="nav-item"><a class="nav-link text-white px-3 active-page" href="{{ url_for('canteen.canteen_menu') }}">Canteen Menu</a></li>
+                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('society.society_club') }}">Society & Clubs</a></li>
+                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('home.academic_support') }}">Academic Support</a></li>
+                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('home.mental_health') }}">Mental Health</a></li>
+                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('home.events') }}">Events</a></li>
+                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('home.social_networking') }}">Social Media</a></li>
+
+                <!-- Profile Dropdown (Only for Logged-in Users) -->
+                {% if 'user_id' in session %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white px-3" href="#" id="userDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        👤 Profile
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" style="background-color: #16213E;">
+                        <li><a class="dropdown-item text-light" href="{{ url_for('profile.view_profile') }}">
+                            <i class="fas fa-user"></i> View Profile</a></li>
+                        <li><hr class="dropdown-divider bg-light"></li>
+                        <li><a class="dropdown-item text-danger" href="{{ url_for('auth.logout') }}">
+                            <i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                    </ul>
+                </li>
+                {% endif %}
+            </ul>
         </div>
     </div>
+</nav>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<div class="hero">
+  <h1>📖 Academic Support & Resources</h1>
+  <p>Explore financial aid, bursaries, and Erasmus opportunities to support your academic journey at TUS.</p>
+</div>
+
+<div class="container mt-5">
+
+  <div class="section">
+    <div class="row">
+      <div class="col-md-6 mb-4">
+        <div class="card p-3">
+          <h5 class="card-title">📌 Fees & Grants</h5>
+          <ul>
+            <li><strong>Fee Structure:</strong> <a href="https://tus.ie/grants-fees/" target="_blank">See Fees</a></li>
+            <li><strong>Payment Methods:</strong> Online, Bank Transfer, In-person</li>
+            <li><strong>Student Grants:</strong> Check eligibility through SUSI</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-6 mb-4">
+        <div class="card p-3">
+          <h5 class="card-title">📌 Scholarships</h5>
+          <ul>
+            <li>1916 Bursary</li>
+            <li>Student Assistance Fund</li>
+            <li>Sports Scholarships</li>
+            <li>Leaders at TUS</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h5 class="mb-3">📌 1916 Bursary - FAQs</h5>
+    <div class="accordion" id="bursaryFaq">
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#bursary1">
+            Who can apply?
+          </button>
+        </h2>
+        <div id="bursary1" class="accordion-collapse collapse" data-bs-parent="#bursaryFaq">
+          <div class="accordion-body">Students from disadvantaged backgrounds with income under €25,000.</div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#bursary2">
+            How to apply?
+          </button>
+        </h2>
+        <div id="bursary2" class="accordion-collapse collapse" data-bs-parent="#bursaryFaq">
+          <div class="accordion-body">Submit an online application and required documents by the deadline.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h5 class="mb-3">📌 Erasmus+ & Study Abroad</h5>
+    <p>Take advantage of global learning by joining the Erasmus+ exchange programme:</p>
+    <ul>
+      <li>EU Nationals: Study in a European university.</li>
+      <li>Non-EU: Apply for global mobility programmes.</li>
+    </ul>
+    <p>🌍 Visit: <a href="https://tus.ie/global/erasmus/students/" target="_blank">TUS Erasmus Page</a></p>
+  </div>
+
+</div>
+
+<footer>
+  &copy; {{ current_year }} Campus Buddy. All rights reserved.
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -1,12 +1,14 @@
 import os
 
-from flask import Flask
+from flask import Flask, render_template
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, UserMixin
 
 from app.routes.academic_routes import academic_bp
 from app.routes.auth_routes import auth_bp
 from app.routes.canteen_routes import canteen_bp
+from app.routes.events_routes import events_bp
+##from app.routes.events_routes import events_bp
 from app.routes.home_routes import home_bp
 from dotenv import load_dotenv
 
@@ -35,7 +37,9 @@ app.secret_key = os.getenv("SECRET_KEY")
 if not app.secret_key:
     raise ValueError("SECRET_KEY is missing! Set it in the .env file.")
 
-
+@app.route("/")
+def landing_page():
+    return render_template("landingPage.html")
 
 # Register Blueprints
 app.register_blueprint(home_bp, url_prefix="/") #homepage
@@ -48,6 +52,7 @@ app.register_blueprint(mental_health_bp, url_prefix="/mental_health")
 app.register_blueprint(canteen_bp, url_prefix="/canteen")
 app.register_blueprint(academic_bp, url_prefix="/academic")
 
+app.register_blueprint(events_bp)  # No url_prefix needed
 
 
 if __name__ == "__main__":

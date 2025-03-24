@@ -22,4 +22,4 @@ canteen_menu_collection = db["canteen_menu"]
 canteen_staff_collection = db["canteen_staff"]  # New collection for staff
 canteen_facilities_collection = db["canteen_facilities"]
 faq_collection = db["faq_collection"]
-
+events_collection = db['events']

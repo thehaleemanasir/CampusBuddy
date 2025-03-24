@@ -1,17 +1,19 @@
-import openai
+import openai  # ✅ Correct Import for OpenAI API
+import os
+
+# Load API Key (Ensure you have set your API Key here)
+OPENAI_API_KEY  = ("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")
 
 def generate_chat_response(question):
     try:
-        openai_response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": "system", "content": "You are a helpful assistant for TUS societies and clubs."},
-                {"role": "user", "content": question}
-            ],
-            max_tokens=100,
-            temperature=0.7
+        openai.api_key = OPENAI_API_KEY
+
+        response = openai.ChatCompletion.create(
+            model="gpt-4o",
+            messages=[{"role": "user", "content": question}],
+            max_tokens=150
         )
-        return openai_response['choices'][0]['message']['content'].strip()
+
+        return response['choices'][0]['message']['content'].strip()
     except Exception as e:
-        print(f"Error: {e}")
-        return "Sorry, an error occurred while fetching a response."
+        return f"Error generating response: {str(e)}"
