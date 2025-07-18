@@ -1,6 +1,6 @@
 
-from flask import Blueprint, render_template, request
-from database import faq_collection  # Ensure you have the correct import
+from flask import Blueprint, render_template
+from database import faq_collection
 
 academic_bp = Blueprint('academic', __name__)
 

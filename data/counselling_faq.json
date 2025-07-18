@@ -1,0 +1,70 @@
+{
+  "counselling": {
+    "description": "Counselling provides a safe, supportive, and confidential environment where students can discuss emotional or psychological difficulties they may be experiencing.",
+    "purpose": "To help students clarify issues impacting their lives and facilitate exploration of better or different ways to live and gain new perspectives.",
+    "services": [
+      "Individual counselling sessions",
+      "Workshops and group sessions",
+      "Psychoeducational programs"
+    ],
+    "access": {
+      "eligibility": "All full-time registered students of TUS",
+      "cost": "Free of charge",
+      "confidentiality": "Adheres to professional codes of ethics; information is not disclosed without consent, except in cases of immediate risk of harm."
+    },
+    "faqs": [
+      {
+        "question": "Is the service free?",
+        "answer": "Yes, the counselling service is free for all full-time registered students of TUS."
+      },
+      {
+        "question": "Is the service confidential?",
+        "answer": "Yes, the service is confidential and adheres to professional codes of ethics. However, if there is a risk of harm to yourself or others, counsellors have a legal and ethical responsibility to take necessary actions. The limits of confidentiality are explained at the beginning of counselling."
+      },
+      {
+        "question": "Will my attendance in Student Counselling be on my academic record?",
+        "answer": "No, your attendance at student counselling is confidential and will not appear on your academic record."
+      },
+      {
+        "question": "Who comes for counselling?",
+        "answer": "A diverse range of students, including new students, mature students, post-graduates, students with disabilities, and international students, utilize the Student Counselling service."
+      },
+      {
+        "question": "What if it's an emergency?",
+        "answer": "If you are in crisis, contact the service as soon as possible to receive an emergency slot that day or as soon as possible."
+      },
+      {
+        "question": "I am worried about my friend; what can I do?",
+        "answer": "You can contact the counselling service to discuss your concerns with a counsellor."
+      },
+      {
+        "question": "What if I have to cancel or reschedule an appointment?",
+        "answer": "Please provide at least 24 hours' notice if possible, so the appointment can be offered to another student. To reschedule, email your regional counselling office."
+      },
+      {
+        "question": "How long is a counselling session?",
+        "answer": "Counselling sessions last approximately 50 minutes."
+      },
+      {
+        "question": "Do you have group counselling?",
+        "answer": "Some campuses may offer group counselling or workshops. Contact your regional office for availability."
+      }
+    ],
+    "regions": {
+      "midwest": {
+        "contact": {
+          "email": "counselling.midwest@tus.ie",
+          "phone": "+353 61 293000",
+          "location": "Moylish Campus, Moylish Park, Limerick, V94 EC5T"
+        }
+      },
+      "midlands": {
+        "contact": {
+          "email": "counselling.midlands@tus.ie",
+          "phone": "+353 90 6468000",
+          "location": "TUS Athlone, Dublin Road, Athlone, Co. Westmeath, N37 HD68"
+        }
+      }
+    }
+  }
+}

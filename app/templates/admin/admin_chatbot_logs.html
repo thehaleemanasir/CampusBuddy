@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chatbot Logs</title>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logo.png') }}">
+
+    <style>
+        .btn-danger {
+  background-color: crimson;
+  border: none;
+  padding: 6px 12px;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-danger:hover {
+  background-color: darkred;
+}
+
+    </style>
+</head>
+<body>
+   {% extends 'admin/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4 text-center">🤖 Chatbot Interaction Logs</h1>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>User</th>
+                    <th>Question</th>
+                    <th>Response</th>
+                    <th>Timestamp</th>
+                    <th>Edit / Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for log in logs %}
+                <tr>
+                    <td>{{ log.user_email }}</td>
+                    <td>{{ log.question }}</td>
+                    <td>{{ log.response }}</td>
+                    <td>{{ log.timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
+                    <td>
+                        <form class="d-flex flex-column gap-2" method="POST" action="{{ url_for('admin.update_chatbot_response', log_id=log._id) }}">
+                            <input type="text" class="form-control mb-2" name="updated_response" placeholder="New response" required>
+                            <button type="submit" class="btn btn-sm btn-primary">Update</button>
+                        </form>
+
+                        <form method="GET" action="{{ url_for('admin.delete_chatbot_log', log_id=log._id) }}" onsubmit="return confirm('Are you sure you want to delete this log?');" class="mt-2">
+                            <button type="submit" class="btn btn-sm btn-danger">🗑️ Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+</body>
+</html>

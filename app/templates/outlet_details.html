@@ -5,40 +5,144 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ outlet.name }} - TUS</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logo.png') }}">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+<style>
+body {
+    padding-top: 20px;
+}
+
+.navbar-brand img {
+    max-width: 100%;
+    height: auto;
+    width: 300px;
+}
+@media (max-width: 576px) {
+    .navbar-brand img {
+        width: 180px;
+    }
+}
+
+@media (max-width: 768px) {
+    .row .col-md-7,
+    .row .col-md-5 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    h3 {
+        font-size: 1.3rem;
+    }
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+.table th, .table td {
+    vertical-align: middle;
+    font-size: 0.95rem;
+}
+
+:root {
+  --bg: #f5f5f5;
+  --text: #1c1c1c;
+  --card: white;
+  --accent: #cfb87c;
+}
+
+body.dark-mode {
+  --bg: #121212;
+  --text: #ffffff;
+  --card: #1e1e1e;
+  --accent: #cfb87c;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.table,
+.table th,
+.table td {
+  background-color: var(--card);
+  color: var(--text);
+}
+
+h1, h3 {
+  color: var(--text);
+}
+
+a.btn,
+.btn-primary {
+  background-color: var(--accent);
+  border: none;
+  color: var(--bg);
+}
+
+.btn-view {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.btn-view:hover {
+  background-color: var(--accent);
+  color: var(--bg);
+}
+ .footer {
+            background-color: #1c1c1c;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        .footer a {
+            color: white;
+            margin: 0 0.5rem;
+        }
+
+</style>
+
 </head>
-<body class="bg-light">
-<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: RGB(33, 33, 33); padding: 1rem 2rem; font-size: 20px">
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: RGB(33, 33, 33); padding: 1rem 2rem; font-size: 20px;">
     <div class="container-fluid">
-        <!-- Logo -->
         <a class="navbar-brand d-flex align-items-center" href="{{ url_for('home.homepage') }}">
-            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="TUS Logo" height="220" width="500" class="me-2">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="TUS Logo" height="60" class="me-2">
         </a>
 
-        <!-- Mobile Menu Toggle -->
-        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <i class="fas fa-bars text-light"></i>
         </button>
 
-        <!-- Navbar Links -->
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-            <ul class="navbar-nav align-items-center" >
+            <ul class="navbar-nav align-items-center">
                 <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('home.homepage') }}">Home</a></li>
                 <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('home.about') }}">About</a></li>
                 <li class="nav-item"><a class="nav-link text-white px-3 active-page" href="{{ url_for('canteen.canteen_menu') }}">Canteen Menu</a></li>
-                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('society.society_club') }}">Society & Clubs</a></li>
+                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('society.societies_list') }}">Society & Clubs</a></li>
                 <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('home.academic_support') }}">Academic Support</a></li>
                 <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('home.mental_health') }}">Mental Health</a></li>
-                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('home.events') }}">Events</a></li>
-                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('home.social_networking') }}">Social Media</a></li>
+                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('calendar.calendar') }}">Calendar</a></li>
 
-                <!-- Profile Dropdown (Only for Logged-in Users) -->
                 {% if 'user_id' in session %}
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-white px-3" href="#" id="userDropdown" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="nav-link dropdown-toggle text-white px-3 btn btn-link" id="userDropdown"
+                            data-bs-toggle="dropdown" aria-expanded="false" onkeydown="if(event.key === 'Enter') this.click();">
                         👤 Profile
-                    </a>
+                    </button>
                     <ul class="dropdown-menu dropdown-menu-end" style="background-color: #16213E;">
                         <li><a class="dropdown-item text-light" href="{{ url_for('profile.view_profile') }}">
                             <i class="fas fa-user"></i> View Profile</a></li>
@@ -48,23 +152,29 @@
                     </ul>
                 </li>
                 {% endif %}
+
+                <li class="nav-item d-flex align-items-center">
+            <button id="modeToggle" class="btn btn-sm btn-outline-light ms-3" title="Toggle dark/light mode">
+              <i class="fas fa-moon"></i>
+            </button>
+                </li>
             </ul>
         </div>
     </div>
 </nav>
+
+
     <div class="container my-5">
         <h1 class="fw-bold">{{ outlet.name }}</h1>
         <p class="text-muted">{{ outlet.campus }} Campus</p>
         <p>{{ outlet.description }}</p>
 
         <div class="row">
-            <!-- Left: Outlet Image -->
             <div class="col-md-7">
                 <img src="{{ outlet.image_url }}" class="img-fluid rounded shadow-sm" alt="{{ outlet.name }}">
                 <p class="text-muted mt-2">{{ outlet.name }} is a food and drink outlet on campus.</p>
             </div>
 
-            <!-- Right: Opening Times -->
             <div class="col-md-5">
                 <h3 class="border-bottom pb-2">Opening Times</h3>
                 <ul class="list-unstyled">
@@ -73,7 +183,7 @@
                             <li class="d-flex justify-content-between"><strong>{{ day }}</strong> <span>{{ time }}</span></li>
                         {% endfor %}
                     {% else %}
-                        <li>{{ outlet.opening_times }}</li>  <!-- If it's a string, just display it -->
+                        <li>{{ outlet.opening_times }}</li>
                     {% endif %}
                 </ul>
             </div>
@@ -111,11 +221,9 @@
 
 
 
-        <!-- Contact Information -->
         <div class="mt-5">
             <h3 class="border-bottom pb-2">Enquiries</h3>
-            <p>If you have any questions, contact us at:</p>
-            <p><a href="mailto:{{ outlet.contact_email }}" class="text-primary fw-bold">{{ outlet.contact_email }}</a></p>
+            <p>If you have any questions, contact us at: <a href="mailto:catering.midwest@tus.ie">catering.midwest@tus.ie</a></p>
         </div>
 
         <div class="mt-4 text-center">
@@ -123,9 +231,90 @@
         </div>
     </div>
 
-<footer class="text-center mt-5 p-4" style="background-color: RGB(33, 33, 33); color:white">
-        <p>© 2025 Campus Buddy. All rights reserved.</p>
-    </footer>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+       <div class="footer">
+    <p>Get in touch with us for feedback or catering info: <a href="mailto:catering.midwest@tus.ie">catering.midwest@tus.ie</a></p>
+    <a href="https://www.linkedin.com/school/tus-ie/?originalSubdomain=ie"><i class="fab fa-linkedin"></i></a>
+    <a href="https://www.tiktok.com/@tus_ie?is_from_webapp=1&sender_device=pc"><i class="fab fa-tiktok"></i></a>
+    <a href="https://www.instagram.com/tus_ire/"><i class="fab fa-instagram"></i></a>
+    <a href="https://www.facebook.com/TUoftheShannon"><i class="fab fa-facebook"></i></a>
+    <a href="https://www.youtube.com/channel/UCk_JmKG2Ghn9ZIMcb6xqAWg"><i class="fab fa-youtube"></i></a>
+    <p class="mt-3">&copy; 2025 Campus Buddy. All rights reserved.</p>
+</div>
+  <script>
+  const toggleBtn = document.getElementById('modeToggle');
+  const icon = toggleBtn?.querySelector('i');
+  const isDark = localStorage.getItem('theme') === 'dark';
+
+  if (isDark) {
+    document.body.classList.add('dark-mode');
+    icon?.classList.replace('fa-moon', 'fa-sun');
+  }
+
+  toggleBtn?.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    const darkNow = document.body.classList.contains('dark-mode');
+    icon?.classList.toggle('fa-sun', darkNow);
+    icon?.classList.toggle('fa-moon', !darkNow);
+    localStorage.setItem('theme', darkNow ? 'dark' : 'light');
+  });
+  document.addEventListener("DOMContentLoaded", function() {
+  const chatToggle = document.getElementById('chatToggle');
+  const chatPopup = document.getElementById('chatPopup');
+
+  if (chatToggle && chatPopup) {
+    chatToggle.addEventListener('click', function() {
+      if (chatPopup.style.display === "none" || chatPopup.style.display === "") {
+        chatPopup.style.display = "block";
+      } else {
+        chatPopup.style.display = "none";
+      }
+    });
+  }
+});
+
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+<button id="chatToggle" title="Chat with Campus Buddy" style="
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  background-color: #FFD700;
+  color: #0A2342;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 24px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+">
+  <i class="fas fa-comments"></i>
+</button>
+
+<a href="{{ url_for('chatbot.chatbot') }}" id="chatButton" title="Chat with Campus Buddy" style="
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  background-color: #FFD700;
+  color: #0A2342;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 24px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+">
+  <i class="fas fa-comments"></i>
+</a>
 </body>
 </html>

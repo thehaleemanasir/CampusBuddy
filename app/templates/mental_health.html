@@ -2,55 +2,1420 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Mental Health Support - Campus Buddy</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body {
-      background: linear-gradient(to right, rgba(128, 100, 0, 0.79), #1b1818);
-      font-family: Arial, sans-serif;
-      padding: 40px;
-    }
-    .card {
-      margin-bottom: 20px;
-    }
-    footer {
-      text-align: center;
-      margin-top: 40px;
-      color: white;
-    }
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Mental Health Matters</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://onpkg.com/aos@2.3.1/dist/aos.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logo.png') }}">
+
+    <style>
+body {
+  background-color: #dfe5ef;
+    color: black;
+}
+    .circle { width: 200px; height: 200px; border-radius: 50%; background: #8466f2; color: white; display: flex; justify-content: center; align-items: center; margin: 2rem auto; font-size: 1.5rem; transition: transform 1s ease-in-out; position: relative; }
+    .progress-ring { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transform: rotate(-90deg); display: none; }
+    .progress-ring circle { stroke: white; stroke-width: 10; fill: transparent; r: 90; cx: 100; cy: 100; stroke-dasharray: 565; stroke-dashoffset: 565; transition: stroke-dashoffset 1s linear; }
+    .controls input, select, button { margin: 0.5rem; padding: 0.5rem; border-radius: 0.5rem; border: 1px solid #ccc; }
+    .dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #ccc;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+}
+
+
+.hero {
+  position: relative;
+  background:
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url('/static/images/hero_mental.gif') center center / cover no-repeat;
+  color: #fff;
+  padding: 100px 20px 0;
+  text-align: center;
+  z-index: 1;
+  min-height: 400px;
+  clip-path: ellipse(120% 100% at 50% 0%);
+}
+
+.col-6 col-md-3{
+    color: #0a0a0a;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(189, 183, 119, 0.27);
+  z-index: 0;
+}
+
+.hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-wave {
+  margin-top: -135px;
+  line-height: 0;
+}
+
+
+.hero-wave svg {
+  display: block;
+  width: 100%;
+  height: 90%;
+}
+
+
+  .flip-card-front, .flip-card-back {
+    color: black;
+  }
+
+
+  .prompt-card {
+    background-color: #f3f1ff;
+    border-left: 5px solid #8466f2;
+  padding: 1rem;
+
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    text-align: left;
+    transition: all 0.3s ease;
+  }
+  #promptList .card {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+
+    background-color: #f3f1ff;
+    border: 1px solid #e1dfff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    text-align: left;
+    height: 100%;
+
+}
+
+  #promptList .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+  }
+
+  .self-help-section {
+    background: linear-gradient(135deg, #f3f1ff 0%, #e9f7ff 100%);
+    padding: 4rem 2rem;
+    border-radius: 16px;
+    margin-top: 3rem;
+  }
+
+  .self-help-section h1 {
+    font-weight: 600;
+    color: #333;
+  }
+
+  .self-help-section .circle {
+    background-color: #8466f2;
+    color: white;
+    box-shadow: 0 0 20px rgba(132, 102, 242, 0.3);
+  }
+
+  .self-help-section .pulse {
+    animation: pulseGlow 2s infinite ease-in-out;
+  }
+
+  @keyframes pulseGlow {
+    0% { box-shadow: 0 0 10px #8466f2; }
+    50% { box-shadow: 0 0 30px #8466f2; }
+    100% { box-shadow: 0 0 10px #8466f2; }
+  }
+
+
+  textarea {
+    width: 100%;
+    border-radius: 6px;
+    border: 1px solid #cbbdff;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 0.95rem;
+    resize: vertical;
+    background: #ffffff;
+  }
+.chart-container {
+    max-width: 400px;
+    margin: 30px auto;
+    padding: 15px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+
+  #moodChart {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  #pomodoroDisplay {
+    font-size: 3rem;
+    font-weight: bold;
+  }
+
+  .glow-wrap.focus-glow svg {
+    filter: drop-shadow(0 0 15px #9c7df9);
+    animation: glow-pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes glow-pulse {
+    0%, 100% { filter: drop-shadow(0 0 5px #9c7df9); }
+    50% { filter: drop-shadow(0 0 20px #9c7df9); }
+  }
+
+  #pomodoroRingProgress {
+    transition: stroke-dashoffset 1s linear;
+  }
+
+  #detoxTips .card {
+    background: #f9f9ff;
+    border-left: 5px solid #8e7cc3;
+  }
+
+  #detoxList li::before {
+    content: "🌿 ";
+        margin-right: 5px;
+  }
+
+
+  .flip-card {
+  perspective: 1000px;
+  cursor: pointer;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 140px;
+  text-align: center;
+  border-radius: 12px;
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease;
+  padding: 1rem;
+}
+
+.flip-card.flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 12px;
+}
+
+.flip-card-front {
+  z-index: 2;
+}
+
+.flip-card-back {
+  transform: rotateY(180deg);
+  background-color: #fff;
+  padding: 0.5rem;
+}
+footer {
+            background-color: #1c1c1c;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;}
+  footer {
+  margin-left: 0;
+  margin-right: 0;
+  width: 100vw;
+}
+
+
+ .footer a {
+ color: white;
+  margin: 0 0.5rem;
+ }
+
+body.dark-mode {
+  background-color: #121212;
+  color: #f1f1f1;
+}
+body.dark-mode .card,
+body.dark-mode .prompt-card,
+body.dark-mode textarea,
+body.dark-mode .flip-card-back {
+  background-color: #1f1f1f !important;
+  color: #f1f1f1 !important;
+}
+body.dark-mode .navbar,
+body.dark-mode footer {
+  background-color: #000 !important;
+}
+body.dark-mode .btn-outline-light {
+  border-color: #aaa;
+}
+
   </style>
 </head>
 <body>
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: RGB(33, 33, 33); padding: 1rem 1rem; font-size: 15px">
+    <div class="container-fluid">
+        <a class="navbar-brand d-flex align-items-center" href="{{ url_for('home.homepage') }}">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="TUS Logo" height="180" width="400" class="me-2">
+        </a>
 
-<h1 class="text-center text-light mb-5">🧠 Mental Health Support</h1>
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars text-light"></i>
+        </button>
 
-<div class="container">
-  {% if support %}
-    {% for item in support %}
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">{{ item.name }}</h5>
-          <p><strong>Category:</strong> {{ item.category }}</p>
-          {% if item.phone %}
-            <p><strong>Phone:</strong> {{ item.phone }}</p>
-          {% endif %}
-          {% if item.website %}
-            <a href="{{ item.website }}" target="_blank" class="btn btn-outline-success btn-sm">Visit Website</a>
-          {% endif %}
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav align-items-center" >
+                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('home.homepage') }}">Home</a></li>
+                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('home.about') }}">About</a></li>
+                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('chatbot.chatbot') }}">Chatbot</a></li>
+                <li class="nav-item"><a class="nav-link text-white px-3 active-page" href="{{ url_for('canteen.canteen_menu') }}">Canteen Menu</a></li>
+                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('society.societies_list') }}">Society & Clubs</a></li>
+                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('home.academic_support') }}">Academic Support</a></li>
+                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('home.mental_health') }}">Mental Health</a></li>
+                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('calendar.calendar') }}">Calendar</a></li>
+
+                {% if 'user_id' in session %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white px-3" href="#" id="userDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        👤 Profile
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" style="background-color: #16213E;">
+                        <li><a class="dropdown-item text-light" href="{{ url_for('profile.view_profile') }}">
+                            <i class="fas fa-user"></i> View Profile</a></li>
+                        <li><hr class="dropdown-divider bg-light"></li>
+                        <li><a class="dropdown-item text-danger" href="{{ url_for('auth.logout') }}">
+                            <i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                    </ul>
+                </li>
+                {% endif %}
+            </ul>
+          <li class="nav-item d-flex align-items-center">
+  <button id="modeToggle" class="btn btn-sm btn-outline-light ms-3" title="Toggle dark/light mode">
+    <i class="fas fa-moon"></i>
+  </button>
+</li>
+
+
         </div>
-      </div>
-    {% endfor %}
-  {% else %}
-    <p class="text-white">No resources available right now.</p>
-  {% endif %}
+    </div>
+</nav>
+
+  <div class="hero">
+    <h1>💛 Your Mental Health Matters</h1>
+    <p class="lead">Take a moment to breathe. We're here to support your wellbeing every step of the way.</p>
+   <div class="d-flex justify-content-center gap-3 mt-3">
+  <a href="/chatbot" class="btn btn-warning btn-rounded">Talk to Our Chatbot</a>
+  <a href="/static/resources/student_wellbeing_guide.pdf" target="_blank" class="btn btn-light btn-rounded">View Full Wellbeing Guide</a>
+  </div>
+
+  </div>
+<div class="hero-wave">
+  <svg viewBox="0 0 1440 100" preserveAspectRatio="none" style="width: 100%; height: 100px;">
+    <path fill="#f0f4f8" d="M0,0 C480,100 960,0 1440,100 L1440,0 L0,0 Z"></path>
+  </svg>
 </div>
 
 
 
+  <div class="container mt-5">
+    <h1 class="fw-bold mt-4 text-center">What are you struggling with?</h1>
+  </div>
+ <div class="row g-3 justify-content-center text-center">
+<!-- Anxiety -->
+    <div class="col-6 col-md-3">
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner" style="background-color: #e5dcff;">
+          <div class="flip-card-front">
+            <div style="font-size: 2rem;">😟</div>
+            <div class="mt-2 fw-semibold">Anxiety</div>
+          </div>
+          <div class="flip-card-back">
+            <p class="small">Try 4-7-8 breathing to calm your nervous system.</p>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<footer class="bg-dark p-3">
-  &copy; {{ current_year }} Campus Buddy
+    <!-- Exam Stress -->
+    <div class="col-6 col-md-3">
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner" style="background-color: #fff2cc;">
+          <div class="flip-card-front">
+            <div style="font-size: 2rem;">📄</div>
+            <div class="mt-2 fw-semibold">Exam Stress</div>
+          </div>
+          <div class="flip-card-back">
+            <p class="small">Break tasks into chunks. Use a Pomodoro timer.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feeling Low -->
+    <div class="col-6 col-md-3">
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner" style="background-color: #e5dcff;">
+          <div class="flip-card-front">
+            <div style="font-size: 2rem;">😞</div>
+            <div class="mt-2 fw-semibold">Feeling Low</div>
+          </div>
+          <div class="flip-card-back">
+            <p class="small">It’s okay to feel off. Try a short gratitude journal.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 col-md-3">
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner" style="background-color: #daeaff;">
+          <div class="flip-card-front">
+            <div style="font-size: 2rem;">😪</div>
+            <div class="mt-2 fw-semibold">Sleep Issues</div>
+          </div>
+          <div class="flip-card-back">
+            <p class="small">Try screen-free time and breathing before bed.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+ </div>
+
+<section class="container mt-5">
+  <div class="row g-4">
+    <div class="col-md-6">
+      <h4 class="section-title">🌺 Mindfulness Video of the Week</h4>
+      <div class="video-card ratio ratio-16x9">
+        <iframe src="https://www.youtube.com/embed/65snrWJTNDU" title="Mindfulness Video" allowfullscreen></iframe>
+      </div>
+
+    </div>
+    <div class="col-md-6">
+  <h4 class="section-title">📄 Helpful Resources</h4>
+  <div class="row g-3">
+
+    <!-- Student Exercises -->
+    <div class="col-6">
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-card-front bg-warning-subtle text-dark rounded p-3">
+            🔗 A Student Exercises
+          </div>
+          <div class="flip-card-back bg-dark text-white rounded p-3">
+            <p class="small">Access mental health tools from the <a href='https://tus.ie/learning-support/learner-success-toolkit/mental-health-resources/' target='_blank' class='text-warning'>TUS Learner Toolkit</a>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TUS Counselling Services -->
+    <div class="col-6">
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-card-front bg-info-subtle text-dark rounded p-3">
+            🔗 TUS Counselling Services
+          </div>
+          <div class="flip-card-back bg-dark text-white rounded p-3">
+            <p class="small">Learn more at <a href='https://tus.ie/counselling/' target='_blank' class='text-info'>tus.ie/counselling</a>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Journaling Prompts -->
+    <div class="col-6">
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-card-front bg-light text-dark rounded p-3">
+            🔗 Journaling Prompts
+          </div>
+          <div class="flip-card-back bg-dark text-white rounded p-3">
+            <p class="small">Daily guided prompts to help track mood and thoughts.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Book a Support Session -->
+    <div class="col-6">
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-card-front bg-warning-subtle text-dark rounded p-3">
+            🔗 How to Book a 1:1 Support Session
+          </div>
+          <div class="flip-card-back bg-dark text-white rounded p-3">
+            <p class="small">Email <a href='mailto:counselling.midlands@tus.ie' class='text-warning'>counselling.midlands@tus.ie</a> to register.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+</section>
+
+<div class="row mt-5 g-4">
+  <h1 class="section-title mt-5 text-center">🧘‍♂️ Self-Help Techniques</h1>
+</div>
+
+
+<section class="container self-help-section">
+  <div class="row g-4 align-items-start">
+    <!-- Breathing Only -->
+    <div class="col-md-6 text-center">
+      <h3 class="mt-4">🧘 Guided Breathing</h3>
+      <div id="breathingView">
+        <div class="circle" id="breatheCircle">
+          <svg class="progress-ring" width="200" height="200">
+            <circle r="90" cx="100" cy="100"></circle>
+          </svg>
+          <span id="breatheText">Inhale</span>
+        </div>
+        <div class="timer-display mb-3" id="timer">4s</div>
+        <button id="startBreathing" class="btn btn-success">Start Breathing</button>
+      </div>
+      <div class="controls mt-3">
+        <label>Mode:
+          <select id="mode">
+            <option value="custom">Custom</option>
+            <option value="default">Default</option>
+            <option value="box">Box</option>
+            <option value="478">4-7-8</option>
+          </select>
+        </label>
+        <br>
+        <label>Inhale: <input id="inhaleTime" type="number" value="4" min="1"></label>
+        <label>Hold: <input id="holdTime" type="number" value="4" min="0"></label>
+        <label>Exhale: <input id="exhaleTime" type="number" value="4" min="1"></label>
+        <br>
+        <button id="pauseBtn">Pause</button>
+        <button id="resumeBtn">Resume</button>
+        <button id="muteBtn">🔇 Mute</button>
+      </div>
+    </div>
+
+    <!-- Grounding -->
+  <div class="col-md-6 text-center">
+  <h3 class="mt-4">🌿 Grounding Techniques</h3>
+
+  <div id="groundingView">
+    <div class="circle pulse">
+      <span id="groundingText">5 Things</span>
+    </div>
+  <button id="startGrounding" class="btn btn-success mt-3 mb-4">Start Grounding</button><br>
+
+    <p id="groundingProgress" class="badge bg-primary fs-6">Step 1 of 5</p>
+
+    <div id="groundingDots" class="d-flex justify-content-center gap-2 mt-3">
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+
+    <div class="mt-4">
+      <button id="prevGroundingStep" class="btn btn-outline-primary me-2">Previous</button>
+      <button id="nextGroundingStep" class="btn btn-primary">Next</button>
+      <button id="restartGrounding" class="btn btn-success d-none ms-2">Restart Grounding</button>
+    </div>
+      <button id="backToBreathing" class="btn btn-secondary mt-4">Back to Breathing</button>
+
+  </div>
+</div>
+
+  </div>
+</section>
+
+<!-- Daily Reflection -->
+<!-- Study—Relax Routine and Daily Reflection  -->
+<section class="container my-5">
+  <div class="row g-4 align-items-start">
+    <!-- Daily Reflection + Mood Summary -->
+    <div class="col-lg-6">
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-start mb-3 gap-2">
+  <h4 class="mb-0">🧠 Daily Mental Health Reflection</h4>
+  <div>
+    <button class="btn btn-outline-primary btn-sm" onclick="generateNewPrompts()">✨ New Prompts</button>
+    <button class="btn btn-outline-secondary btn-sm" onclick="downloadReflections()">📥 Download .txt</button>
+  </div>
+</div>
+      <div class="row row-cols-1 row-cols-md-1 g-4" id="promptList">
+        <div class="col">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">📝 What can I do to support my mental health this week?</h5>
+                <label>
+                    <textarea class="form-control mb-2" rows="3" placeholder="Write your thoughts..."></textarea>
+                </label>
+                <div>Mood: 😊 😐 😟 💪 ☁️</div>
+              <button class="btn btn-sm btn-primary mt-2">Add Entry</button>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">📝 What does my mind need right now?</h5>
+                <label>
+                    <textarea class="form-control mb-2" rows="3" placeholder="Write your thoughts..."></textarea>
+                </label>
+                <div>Mood: 😊 😐 😟 💪 ☁️</div>
+              <button class="btn btn-sm btn-primary mt-2">Add Entry</button>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">📝 Who or what made me feel supported recently?</h5>
+                <label>
+                    <textarea class="form-control mb-2" rows="3" placeholder="Write your thoughts..."></textarea>
+                </label>
+                <div>Mood: 😊 😐 😟 💪 ☁️</div>
+              <button class="btn btn-sm btn-primary mt-2">Add Entry</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Study—Relax Routine -->
+    <div class="col-lg-6">
+      <h3 class="mb-4 text-center">🏋️ Study—Relax Routine</h3>
+      <div class="card p-4 shadow-sm text-center">
+        <h5>⏱️ Pomodoro Timer</h5>
+        <div class="mb-3">
+          <label for="sessionType" class="form-label">Choose Session</label>
+          <select id="sessionType" class="form-select w-auto mx-auto">
+            <option value="25,5">25 min Focus / 5 min Break</option>
+            <option value="50,10">50 min Focus / 10 min Break</option>
+            <option value="15,3">15 min Focus / 3 min Break</option>
+          </select>
+        </div>
+        <div class="position-relative d-inline-block mb-3 glow-wrap">
+          <svg id="pomodoroRing" width="160" height="160">
+            <circle r="70" cx="80" cy="80" stroke="#ddd" stroke-width="12" fill="none" />
+            <circle id="pomodoroRingProgress" r="70" cx="80" cy="80" stroke="#8466f2" stroke-width="12" fill="none"
+              stroke-dasharray="439.6" stroke-dashoffset="0" stroke-linecap="round" />
+          </svg>
+          <div class="position-absolute top-50 start-50 translate-middle fs-3 fw-bold" id="pomodoroDisplay">25:00</div>
+        </div>
+        <div class="mb-2">
+          <button class="btn btn-success me-2" onclick="startPomodoro()">Start</button>
+          <button class="btn btn-warning me-2" onclick="pausePomodoro()">Pause</button>
+          <button class="btn btn-danger" onclick="resetPomodoro()">Reset</button>
+        </div>
+        <p class="text-muted mb-1" id="pomodoroStatus">Focus Mode</p>
+        <p class="fw-bold">🎯 Completed Cycles Today: <span id="cycleCount">0</span></p>
+      </div>
+      <div class="card mb-4 p-4 shadow-sm mt-4">
+        <h5>📝 Quick Task List</h5>
+        <div class="input-group mb-3">
+            <label for="taskInput"></label><input id="taskInput" type="text" class="form-control" placeholder="Add a task...">
+          <button class="btn btn-primary" onclick="addTask()">Add</button>
+        </div>
+        <ul class="list-group" id="taskList"></ul>
+      </div>
+      <div class="card p-4 shadow-sm">
+        <h5>🤸 Stretch Tip</h5>
+        <p id="stretchTip" class="fs-6 fst-italic text-muted">Click below to get a stretch tip!</p>
+        <button class="btn btn-outline-info btn-sm mt-2" onclick="showStretchTip()">💡 New Tip</button>
+      </div>
+
+            <div class="mt-5">
+        <h3 class="text-center mt-5">📈 Mood Summary for Today</h3>
+        <div class="chart-container mx-auto">
+          <canvas id="moodChart" width="300" height="300"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="container my-5">
+  <div class="row g-4 align-items-start">
+
+    <!-- Detox Tips -->
+    <div class="col-md-7" id="detoxTips">
+      <h4 class="mb-3 text-center">📵 Digital Detox Tips</h4>
+
+      <div class="card shadow-sm mb-3 p-4 text-center">
+        <p id="detoxTipText" class="fs-5 fst-italic text-muted">Loading tip...</p>
+        <button class="btn btn-outline-primary btn-sm mt-2" onclick="showNewDetoxTip()">🔁 Show Another</button>
+          <button class="btn btn-outline-info rounded-pill px-4 py-2 fw-semibold shadow-sm"
+          data-bs-toggle="collapse"
+          data-bs-target="#allDetoxTips"
+          aria-expanded="false">
+    📋 Show All Tips
+  </button>
+      </div>
+
+      <div class="collapse mt-3" id="allDetoxTips">
+        <ul class="list-group list-group-flush" id="detoxList"></ul>
+      </div>
+    </div>
+
+    <!-- Emergency Box Right Column -->
+    <div class="col-md-5">
+         <h4 class="mb-3 text-center">🚨 In Crisis?</h4>
+<div class="emergency-box text-white p-4 rounded shadow-sm h-100"
+     style="background: linear-gradient(135deg, #1d2740, rgba(117,114,82,0.52));">
+        <p class="mb-2">
+          <strong>📞 TUS Counselling:</strong> 061 293 129<br>
+          <strong>🚔 Samaritans:</strong> 116 123<br>
+          <strong>🔗 Website:</strong> <a href="https://www.pieta.ie" class="text-white text-decoration-underline">www.pieta.ie</a><br>
+          <strong>🏥 UHL Crisis Team: </strong> 061 301 111 Available 24/7 <br>
+          <strong>🏠 Pietà House: </strong> 1800 247 247 Free therapy for suicide/self-harm crises | <a href="https://www.pieta.ie" target="_blank" class="text-white text-decoration-underline">Visit Website</a><br>
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer class="bg-dark text-white text-center py-4 mt-5 w-100" style="width: 100vw;">
+  <div class="container">
+    <div class="mb-3">
+      <a href="https://www.linkedin.com/school/tus-ie/?originalSubdomain=ie" class="text-white me-3"><i class="fab fa-linkedin"></i></a>
+      <a href="https://www.tiktok.com/@tus_ie?is_from_webapp=1&sender_device=pc" class="text-white me-3"><i class="fab fa-tiktok"></i></a>
+      <a href="https://www.instagram.com/tus_ire/" class="text-white me-3"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.facebook.com/TUoftheShannon" class="text-white me-3"><i class="fab fa-facebook"></i></a>
+      <a href="https://www.youtube.com/channel/UCk_JmKG2Ghn9ZIMcb6xqAWg" class="text-white"><i class="fab fa-youtube"></i></a>
+    </div>
+    <div>
+      <h5 class="mb-1">🌼 Campus Buddy: Mental Health Support</h5>
+      <p class="mb-0">Promoting wellness for all students · Supported by TUS Counselling</p>
+      <small class="d-block mt-2">&copy; 2025 Campus Buddy. All rights reserved.</small>
+    </div>
+  </div>
 </footer>
+
+
+
+   <!-- Audio Clips -->
+  <audio id="inhaleAudio" src="/static/audio/inhale.mp3" preload="auto"></audio>
+  <audio id="holdAudio" src="/static/audio/hold.mp3" preload="auto"></audio>
+  <audio id="exhaleAudio" src="/static/audio/exhale.mp3" preload="auto"></audio>
+  <audio id="grounding5" src="/static/audio/5Things.mp3" preload="auto"></audio>
+  <audio id="grounding4" src="/static/audio/4Things.mp3" preload="auto"></audio>
+  <audio id="grounding3" src="/static/audio/3Things.mp3" preload="auto"></audio>
+  <audio id="grounding2" src="/static/audio/2Things.mp3" preload="auto"></audio>
+  <audio id="grounding1" src="/static/audio/1Thing.mp3" preload="auto"></audio>
+  <audio id="studyAudio" src="/static/audio/studyHour.mp3" preload="auto"></audio>
+
+
+ <script>
+  const text = document.getElementById('breatheText');
+  const timer = document.getElementById('timer');
+  const mode = document.getElementById('mode');
+  const inhaleInput = document.getElementById('inhaleTime');
+  const holdInput = document.getElementById('holdTime');
+  const exhaleInput = document.getElementById('exhaleTime');
+  const muteBtn = document.getElementById('muteBtn');
+  const inhaleAudio = document.getElementById('inhaleAudio');
+  const holdAudio = document.getElementById('holdAudio');
+  const exhaleAudio = document.getElementById('exhaleAudio');
+  const circle = document.getElementById('breatheCircle');
+  const ring = document.querySelector(".progress-ring circle");
+  const ringWrap = document.querySelector(".progress-ring");
+  const startBreathingBtn = document.getElementById('startBreathing');
+
+  const breathingView = document.getElementById('breathingView');
+  const groundingView = document.getElementById('groundingView');
+  const groundingText = document.getElementById('groundingText');
+  const groundingProgress = document.getElementById('groundingProgress');
+  const restartBtn = document.getElementById('restartGrounding');
+  const backToBreathing = document.getElementById('backToBreathing');
+  const dots = document.querySelectorAll('.dot');
+
+  const groundingSteps = [
+    { label: "5 Things you can see", audio: document.getElementById('grounding5') },
+    { label: "4 Things you can touch", audio: document.getElementById('grounding4') },
+    { label: "3 Things you can hear", audio: document.getElementById('grounding3') },
+    { label: "2 Things you can smell", audio: document.getElementById('grounding2') },
+    { label: "1 Thing you can taste", audio: document.getElementById('grounding1') }
+  ];
+
+  let mute = false;
+  let interval;
+  let phaseIndex = 0;
+  let breathingStarted = false;
+  let groundingActive = false;
+  let groundingStepIndex = 0;
+
+  const phases = ['Inhale', 'Hold', 'Exhale'];
+  const radius = 90;
+  const circ = 2 * Math.PI * radius;
+  ring.style.strokeDasharray = `${circ}`;
+
+  function updateRing(progress, total) {
+    ringWrap.style.display = (phases[phaseIndex] === 'Hold') ? 'block' : 'none';
+    const offset = circ - (progress / total) * circ;
+    ring.style.strokeDashoffset = offset;
+  }
+
+  function speak(phase) {
+    if (mute) return;
+    if (phase === 'Inhale') inhaleAudio.play();
+    else if (phase === 'Hold') holdAudio.play();
+    else if (phase === 'Exhale') exhaleAudio.play();
+  }
+
+  function nextPhase() {
+    if (!breathingStarted) return;
+
+    const times = [
+      parseInt(inhaleInput.value),
+      parseInt(holdInput.value),
+      parseInt(exhaleInput.value)
+    ];
+
+    let timeLeft = times[phaseIndex];
+    const total = timeLeft;
+    const phase = phases[phaseIndex];
+
+    text.textContent = phase;
+    speak(phase);
+
+    circle.className = 'circle';
+    if (phase === 'Inhale') circle.classList.add('grow');
+    else if (phase === 'Exhale') circle.classList.add('shrink');
+
+    clearInterval(interval);
+    updateRing(timeLeft, total);
+    timer.textContent = `${timeLeft}s`;
+
+    interval = setInterval(() => {
+      timeLeft--;
+      updateRing(timeLeft, total);
+      timer.textContent = `${timeLeft}s`;
+      if (timeLeft <= 0) {
+        phaseIndex = (phaseIndex + 1) % 3;
+        nextPhase();
+      }
+    }, 1000);
+  }
+
+  startBreathingBtn.onclick = () => {
+    if (groundingActive) {
+      groundingSteps.forEach(step => {
+        step.audio.pause();
+        step.audio.currentTime = 0;
+      });
+      groundingActive = false;
+    }
+
+    breathingStarted = true;
+    nextPhase();
+    startBreathingBtn.style.display = 'none';
+  };
+
+  startBreathingBtn.onclick = () => {
+  breathingStarted = true;
+  nextPhase();
+  startBreathingBtn.style.display = 'none';
+};
+
+
+  document.getElementById('pauseBtn').onclick = () => clearInterval(interval);
+  document.getElementById('resumeBtn').onclick = () => nextPhase();
+  muteBtn.onclick = () => {
+    mute = !mute;
+    muteBtn.textContent = mute ? '🔈 Unmute' : '🔇 Mute';
+  };
+  mode.onchange = () => {
+    if (mode.value === 'default') {
+      inhaleInput.value = 4; holdInput.value = 4; exhaleInput.value = 4;
+    } else if (mode.value === 'box') {
+      inhaleInput.value = 4; holdInput.value = 4; exhaleInput.value = 4;
+    } else if (mode.value === '478') {
+      inhaleInput.value = 4; holdInput.value = 7; exhaleInput.value = 8;
+    }
+  };
+
+  // Grounding
+  document.getElementById('startGrounding').onclick = () => {
+    clearInterval(interval);
+    breathingStarted = false;
+
+    groundingSteps.forEach(step => {
+      step.audio.pause();
+      step.audio.currentTime = 0;
+    });
+
+    groundingActive = true;
+    groundingStepIndex = 0;
+
+    restartBtn.classList.add('d-none');
+    document.getElementById('nextGroundingStep').classList.remove('d-none');
+    document.getElementById('prevGroundingStep').classList.remove('d-none');
+
+    showGroundingStep();
+  };
+
+  document.getElementById('nextGroundingStep').onclick = () => {
+    groundingStepIndex++;
+    if (groundingStepIndex < groundingSteps.length) {
+      showGroundingStep();
+    } else {
+      groundingText.textContent = "✅ You're grounded. Well done.";
+      groundingProgress.textContent = "Step 5 of 5";
+      groundingProgress.classList.add("fade-out");
+      document.getElementById('nextGroundingStep').classList.add("d-none");
+      document.getElementById('prevGroundingStep').classList.add("d-none");
+      restartBtn.classList.remove("d-none");
+      updateDots();
+    }
+  };
+
+  document.getElementById('prevGroundingStep').onclick = () => {
+    if (groundingStepIndex > 0) {
+      groundingStepIndex--;
+      showGroundingStep();
+    }
+  };
+
+  restartBtn.onclick = () => {
+    groundingStepIndex = 0;
+    groundingProgress.classList.remove("fade-out");
+    restartBtn.classList.add("d-none");
+    document.getElementById('nextGroundingStep').classList.remove("d-none");
+    document.getElementById('prevGroundingStep').classList.remove("d-none");
+    showGroundingStep();
+  };
+
+  backToBreathing.onclick = () => {
+    groundingSteps.forEach(s => {
+      s.audio.pause();
+      s.audio.currentTime = 0;
+    });
+
+    groundingActive = false;
+    startBreathingBtn.style.display = 'inline-block';
+  };
+
+  function updateDots() {
+   dots.forEach((dot, i) => {
+    dot.classList.toggle('active', i === groundingStepIndex);
+  });
+  }
+
+  function showGroundingStep() {
+    const step = groundingSteps[groundingStepIndex];
+    groundingText.textContent = step.label;
+    groundingProgress.textContent = `Step ${groundingStepIndex + 1} of 5`;
+    updateDots();
+
+    groundingSteps.forEach(s => {
+      s.audio.pause();
+      s.audio.currentTime = 0;
+    });
+
+    if (groundingActive && !mute) step.audio.play();
+  }
+  showGroundingStep();
+
+
+const reflectionPrompts = [
+  "What emotion am I feeling most strongly today?",
+  "What does my mind need right now?",
+  "What can I do to support my mental health this week?",
+  "Have I spoken kindly to myself today?",
+  "What is one thing I can let go of today?",
+  "When did I last feel truly calm and safe?",
+  "What is one small step I can take to reduce my stress?",
+  "How can I show myself compassion right now?",
+  "What boundaries do I need to protect my peace?",
+  "What is something I’m proud of myself for today?",
+  "Who or what made me feel supported recently?",
+  "Is there something I need to forgive myself for?"
+];
+
+const chime = document.getElementById("chimeSound");
+const moodSelections = {};
+
+function renderPromptCard(prompt, index) {
+  const entryKey = `journal-${index}`;
+  const entries = JSON.parse(localStorage.getItem(entryKey) || "[]");
+  const moods = ["😊", "😔", "😌", "😠", "😴", "💪", "💭"];
+
+  const entryList = entries.map(e => `
+    <details class="mb-2">
+      <summary class="small text-primary">🗓 ${e.timestamp} ${e.time || ""} ${e.mood || ""}</summary>
+      <div class="text-muted mt-1">${e.text}</div>
+    </details>
+  `).join("");
+
+  return `
+    <div class="col-md-8">
+      <div class="prompt-card">
+        <p class="mb-2 fst-italic text-muted">📝 ${prompt}</p>
+        <textarea id="entry-${index}" placeholder="Write your thoughts..." rows="3" class="mb-2"></textarea>
+
+        <div class="mb-2">
+          <small class="text-muted">Mood:</small>
+          <div class="d-flex gap-2 flex-wrap justify-content-start mt-1" id="moods-${index}">
+            ${moods.map(m => `<button type="button" class="btn btn-light btn-sm mood-btn" onclick="selectMood(${index}, '${m}', this)">${m}</button>`).join("")}
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-between mb-2">
+          <button class="btn btn-sm btn-outline-success" onclick="saveEntry(${index})">➕ Add Entry</button>
+          <button class="btn btn-sm btn-outline-danger" onclick="clearEntries(${index})">🗑 Clear</button>
+        </div>
+
+        <div id="entryList-${index}">
+          ${entryList || "<i class='text-muted'>No entries yet.</i>"}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function displayPrompts(prompts, ids) {
+  const promptHTML = prompts.map((p, i) => renderPromptCard(p, ids[i])).join("");
+  document.getElementById("promptList").innerHTML = promptHTML;
+}
+
+function setDailyPrompts() {
+  const today = new Date().toDateString();
+  const savedDate = localStorage.getItem("prompt-date");
+
+  if (savedDate === today && localStorage.getItem("prompt-ids")) {
+    const savedIDs = JSON.parse(localStorage.getItem("prompt-ids"));
+    const savedPrompts = savedIDs.map(i => reflectionPrompts[i]);
+    displayPrompts(savedPrompts, savedIDs);
+    generateMoodChart();
+  } else {
+    generateNewPrompts();
+  }
+}
+
+function generateNewPrompts() {
+  const shuffled = [...reflectionPrompts].map((val, i) => ({ val, i }))
+                  .sort(() => 0.5 - Math.random());
+  const selected = shuffled.slice(0, 3);
+  const ids = selected.map(p => p.i);
+  const prompts = selected.map(p => p.val);
+
+  displayPrompts(prompts, ids);
+  localStorage.setItem("prompt-ids", JSON.stringify(ids));
+  localStorage.setItem("prompt-date", new Date().toDateString());
+
+  ids.forEach(i => localStorage.removeItem(`journal-${i}`));
+  chime.play().catch(() => {});
+  generateMoodChart();
+}
+
+function saveEntry(index) {
+  const textarea = document.getElementById(`entry-${index}`);
+  const value = textarea.value.trim();
+  if (!value) return;
+
+  const entryKey = `journal-${index}`;
+  const now = new Date();
+  const hour = now.getHours();
+  let timeOfDay = "🌅 Morning";
+  if (hour >= 12 && hour < 17) timeOfDay = "🌞 Afternoon";
+  else if (hour >= 17) timeOfDay = "🌙 Evening";
+
+  const newEntry = {
+    text: value,
+    timestamp: now.toLocaleString(),
+    mood: moodSelections[index] || "",
+    time: timeOfDay
+  };
+
+  const entries = JSON.parse(localStorage.getItem(entryKey) || "[]");
+  entries.push(newEntry);
+  localStorage.setItem(entryKey, JSON.stringify(entries));
+  textarea.value = "";
+  moodSelections[index] = "";
+  setDailyPrompts();
+}
+
+function selectMood(index, mood, btn) {
+  moodSelections[index] = mood;
+  document.querySelectorAll(`#moods-${index} .mood-btn`).forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function clearEntries(index) {
+  if (confirm("Clear all entries for this prompt?")) {
+    localStorage.removeItem(`journal-${index}`);
+    setDailyPrompts();
+  }
+}
+
+function downloadReflections() {
+  const ids = JSON.parse(localStorage.getItem("prompt-ids") || "[]");
+  if (ids.length === 0) return alert("No reflections today.");
+
+  let content = "🧠 Your Daily Reflections\n\n";
+  ids.forEach((i, idx) => {
+    const prompt = reflectionPrompts[i];
+    const entries = JSON.parse(localStorage.getItem(`journal-${i}`) || "[]");
+    content += `Prompt ${idx + 1}: ${prompt}\n`;
+
+    if (!entries.length) content += "(No responses)\n\n";
+    else entries.forEach(e => {
+      const tag = `${e.time || ""} ${e.mood || ""}`;
+      content += `- ${e.timestamp} ${tag}\n${e.text}\n\n`;
+    });
+  });
+
+  const blob = new Blob([content], { type: "text/plain" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "My_Reflections.txt";
+  a.click();
+  URL.revokeObjectURL(url);
+}
+let moodChartInstance = null;
+
+function generateMoodChart() {
+  const ctx = document.getElementById("moodChart").getContext("2d");
+
+  // Destroy previous chart if exists
+  if (moodChartInstance) {
+    moodChartInstance.destroy();
+  }
+
+  const ids = JSON.parse(localStorage.getItem("prompt-ids") || "[]");
+  const moodCount = {};
+
+  ids.forEach(i => {
+    const entries = JSON.parse(localStorage.getItem(`journal-${i}`) || "[]");
+    entries.forEach(e => {
+      if (!e.mood) return;
+      moodCount[e.mood] = (moodCount[e.mood] || 0) + 1;
+    });
+  });
+
+  // Prevent rendering empty chart
+  if (Object.keys(moodCount).length === 0) {
+    document.getElementById("moodChart").style.display = "none";
+    return;
+  } else {
+    document.getElementById("moodChart").style.display = "block";
+  }
+
+  moodChartInstance = new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: Object.keys(moodCount),
+      datasets: [{
+        data: Object.values(moodCount),
+        backgroundColor: ['#8e7cc3', '#ffd966', '#76a5af', '#f4cccc', '#a4c2f4', '#b6d7a8', '#f9cb9c']
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { position: 'bottom' }
+      }
+    }
+  });
+}
+setDailyPrompts();
+
+ // --- Pomodoro Timer ---
+const studyAudio = document.getElementById("studyAudio");
+const chimeSound = document.getElementById("chimeSound");
+const sessionSelect = document.getElementById("sessionType");
+
+let isPomodoroRunning = false;
+let isFocusMode = true;
+let pomodoroInterval;
+let remainingSeconds = 1500;
+let focusDuration = 1500;
+let breakDuration = 300;
+let cyclesCompleted = parseInt(localStorage.getItem("pomodoroCycles") || "0");
+
+document.getElementById("cycleCount").textContent = cyclesCompleted;
+
+function updatePomodoroDisplay() {
+  const min = Math.floor(remainingSeconds / 60).toString().padStart(2, '0');
+  const sec = (remainingSeconds % 60).toString().padStart(2, '0');
+  document.getElementById("pomodoroDisplay").textContent = `${min}:${sec}`;
+  document.getElementById("pomodoroStatus").textContent = isFocusMode ? "Focus Mode" : "Break Time";
+  updatePomodoroRing();
+
+  // Animate glow
+  document.querySelector(".glow-wrap").classList.toggle("focus-glow", isFocusMode && isPomodoroRunning);
+}
+
+function updatePomodoroRing() {
+  const circle = document.getElementById("pomodoroRingProgress");
+  const total = isFocusMode ? focusDuration : breakDuration;
+  const progress = (remainingSeconds / total) * 439.6;
+  circle.style.strokeDashoffset = 439.6 - progress;
+  circle.setAttribute("stroke", isFocusMode ? "#8466f2" : "#6cb2eb");
+}
+
+function startPomodoro() {
+  if (isPomodoroRunning) return;
+  isPomodoroRunning = true;
+
+  const [focusMins, breakMins] = sessionSelect.value.split(",").map(Number);
+  focusDuration = focusMins * 60;
+  breakDuration = breakMins * 60;
+
+  if (isFocusMode && remainingSeconds !== focusDuration) remainingSeconds = focusDuration;
+
+  if (isFocusMode) {
+    studyAudio.currentTime = 0;
+    studyAudio.play().catch(() => {});
+  }
+
+  pomodoroInterval = setInterval(() => {
+    remainingSeconds--;
+    updatePomodoroDisplay();
+
+    if (isFocusMode && studyAudio.currentTime > 595) {
+      studyAudio.currentTime = 0;
+      studyAudio.play().catch(() => {});
+    }
+
+    if (remainingSeconds <= 0) {
+      clearInterval(pomodoroInterval);
+      chimeSound.play().catch(() => {});
+      isPomodoroRunning = false;
+
+      if (isFocusMode) {
+        cyclesCompleted++;
+        localStorage.setItem("pomodoroCycles", cyclesCompleted);
+        document.getElementById("cycleCount").textContent = cyclesCompleted;
+      }
+
+      isFocusMode = !isFocusMode;
+      remainingSeconds = isFocusMode ? focusDuration : breakDuration;
+
+      if (!isFocusMode) {
+        studyAudio.pause();
+      }
+
+      updatePomodoroDisplay();
+      startPomodoro();
+    }
+  }, 1000);
+}
+
+function pausePomodoro() {
+  clearInterval(pomodoroInterval);
+  isPomodoroRunning = false;
+  studyAudio.pause();
+  document.querySelector(".glow-wrap").classList.remove("focus-glow");
+}
+
+function resetPomodoro() {
+  clearInterval(pomodoroInterval);
+  isPomodoroRunning = false;
+  isFocusMode = true;
+  remainingSeconds = focusDuration;
+  studyAudio.pause();
+  studyAudio.currentTime = 0;
+  document.querySelector(".glow-wrap").classList.remove("focus-glow");
+  updatePomodoroDisplay();
+}
+
+updatePomodoroDisplay();
+
+  // --- Task List ---
+  function addTask() {
+    const input = document.getElementById("taskInput");
+    const task = input.value.trim();
+    if (!task) return;
+
+    const li = document.createElement("li");
+    li.className = "list-group-item d-flex justify-content-between align-items-center";
+    li.innerHTML = `
+      <span onclick="this.parentElement.classList.toggle('completed')" style="cursor:pointer;">${task}</span>
+      <button class="btn btn-sm btn-outline-danger" onclick="this.parentElement.remove()">✕</button>
+    `;
+    document.getElementById("taskList").appendChild(li);
+    input.value = "";
+  }
+
+  // --- Stretch Tips ---
+  const stretchTips = [
+    "Stand up and reach for the ceiling for 10 seconds.",
+    "Roll your shoulders backward and forward 5 times.",
+    "Blink your eyes slowly 10 times.",
+    "Do 10 jumping jacks (gently!).",
+    "Neck stretch: Look left, right, up, and down slowly.",
+    "Shake out your hands and wrists for 15 seconds.",
+    "Touch your toes slowly and hold for 10 seconds.",
+    "Do 5 deep belly breaths through your nose."
+  ];
+
+  function showStretchTip() {
+    const randomTip = stretchTips[Math.floor(Math.random() * stretchTips.length)];
+    document.getElementById("stretchTip").textContent = randomTip;
+  }
+
+  showStretchTip();
+
+  const detoxTips = [
+  "Turn off all notifications for 1 hour.",
+  "Keep your phone out of reach while working.",
+  "Charge your phone outside your bedroom tonight.",
+  "Take a 30-minute walk without your phone.",
+  "Delete one app you haven’t used in a month.",
+  "No screens 1 hour before bed – try a book instead.",
+  "Unfollow 5 accounts that don’t inspire or serve you.",
+  "Put your phone on Do Not Disturb during meals.",
+  "Schedule 1 ‘phone-free’ hour every evening.",
+  "Switch to grayscale for a day to reduce screen craving."
+];
+
+function showNewDetoxTip() {
+  const tip = detoxTips[Math.floor(Math.random() * detoxTips.length)];
+  document.getElementById("detoxTipText").textContent = tip;
+  localStorage.setItem("dailyDetoxTip", tip);
+  localStorage.setItem("detoxDate", new Date().toDateString());
+}
+
+function loadDailyDetoxTip() {
+  const today = new Date().toDateString();
+  const savedDate = localStorage.getItem("detoxDate");
+  const savedTip = localStorage.getItem("dailyDetoxTip");
+
+  if (savedDate === today && savedTip) {
+    document.getElementById("detoxTipText").textContent = savedTip;
+  } else {
+    showNewDetoxTip();
+  }
+}
+
+function renderAllDetoxTips() {
+  const ul = document.getElementById("detoxList");
+  ul.innerHTML = "";
+  detoxTips.forEach(tip => {
+    const li = document.createElement("li");
+    li.className = "list-group-item";
+    li.textContent = tip;
+    ul.appendChild(li);
+  });
+}
+
+loadDailyDetoxTip();
+renderAllDetoxTips();
+
+  function toggleSection(id) {
+    const section = document.getElementById(id);
+    const allSections = document.querySelectorAll('.collapsible-section');
+    allSections.forEach(sec => {
+      if (sec.id === id) {
+        sec.style.display = sec.style.display === 'none' ? 'block' : 'none';
+        if (sec.style.display === 'block') {
+          sec.scrollIntoView({ behavior: 'smooth' });
+        }
+      } else {
+        sec.style.display = 'none';
+      }
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+  const chatToggle = document.getElementById('chatToggle');
+  const chatPopup = document.getElementById('chatPopup');
+
+  if (chatToggle && chatPopup) {
+    chatToggle.addEventListener('click', function() {
+      if (chatPopup.style.display === "none" || chatPopup.style.display === "") {
+        chatPopup.style.display = "block";
+      } else {
+        chatPopup.style.display = "none";
+      }
+    });
+  }
+});
+
+const modeToggle = document.getElementById("modeToggle");
+  const modeIcon = modeToggle.querySelector("i");
+
+  function applyMode() {
+    const isDark = localStorage.getItem("darkMode") === "true";
+    document.body.classList.toggle("dark-mode", isDark);
+    modeIcon.className = isDark ? "fas fa-sun" : "fas fa-moon";
+  }
+
+  modeToggle.addEventListener("click", () => {
+    const isDark = document.body.classList.toggle("dark-mode");
+    localStorage.setItem("darkMode", isDark);
+    modeIcon.className = isDark ? "fas fa-sun" : "fas fa-moon";
+  });
+
+  window.addEventListener("DOMContentLoaded", applyMode);
+ </script>
+
+
+<button id="chatToggle" title="Chat with Campus Buddy" style="
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  background-color: #FFD700;
+  color: #0A2342;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 24px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+">
+  <i class="fas fa-comments"></i>
+</button>
+
+<a href="{{ url_for('chatbot.chatbot') }}" id="chatButton" title="Chat with Campus Buddy" style="
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  background-color: #FFD700;
+  color: #0A2342;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 24px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+">
+  <i class="fas fa-comments"></i>
+</a>
 
 </body>
 </html>

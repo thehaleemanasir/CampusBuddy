@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <title>Campus Buddy Chatbot</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- FontAwesome for Icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <!-- Bootstrap JS (for responsive collapse & dropdowns) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.socket.io/4.3.2/socket.io.min.js"></script>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logo.png') }}">
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
@@ -88,6 +88,19 @@
     100% { opacity: 1; transform: translateY(0); }
   }
 
+    .dark-mode {
+      background: #1b1818;
+      color: #f8f9fa;
+    }
+    .dark-mode .hero {
+      background: #2c2c2c;
+      color: #f8f9fa;
+    }
+    .dark-mode .p-4 {
+      background: #2c2c2c;
+      color: #fff;
+    }
+
   button.chip {
     background-color: #f1f1f1;
     border: none;
@@ -103,50 +116,45 @@
     background-color: rgba(128,100,0,0.85);
     color: white;
   }
-
     footer {
-      margin-top: 50px;
-      text-align: center;
-      padding: 20px;
-      color: white;
-     background-color: #1b1818;
-    }
+            background-color: #1c1c1c;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+    footer a {
+            color: white;
+            margin: 0 0.5rem;
+        }
   </style>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: RGB(33, 33, 33); padding: 1rem 1rem; font-size: 15px">
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: RGB(33, 33, 33); padding: 1rem 2rem; font-size: 20px">
     <div class="container-fluid">
-        <!-- Logo -->
         <a class="navbar-brand d-flex align-items-center" href="{{ url_for('home.homepage') }}">
-            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="TUS Logo" height="180" width="400" class="me-2">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="TUS Logo" height="220" width="350" class="me-2">
         </a>
-
-        <!-- Mobile Menu Toggle -->
         <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fas fa-bars text-light"></i>
         </button>
-
-        <!-- Navbar Links -->
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav align-items-center" >
                 <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('home.homepage') }}">Home</a></li>
                 <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('home.about') }}">About</a></li>
+                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('chatbot.chatbot') }}">Chatbot</a></li>
                 <li class="nav-item"><a class="nav-link text-white px-3 active-page" href="{{ url_for('canteen.canteen_menu') }}">Canteen Menu</a></li>
-                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('society.society_club') }}">Society & Clubs</a></li>
+                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('society.societies_list') }}">Society & Clubs</a></li>
                 <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('home.academic_support') }}">Academic Support</a></li>
                 <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('home.mental_health') }}">Mental Health</a></li>
-                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('home.events') }}">Events</a></li>
-                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('home.social_networking') }}">Social Media</a></li>
-
-                <!-- Profile Dropdown (Only for Logged-in Users) -->
+                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('calendar.calendar') }}">Calendar</a></li>
                 {% if 'user_id' in session %}
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-white px-3" href="#" id="userDropdown" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="nav-link dropdown-toggle text-white px-3 btn btn-link" id="userDropdown"
+                        data-bs-toggle="dropdown" aria-expanded="false" onkeydown="if(event.key === 'Enter') this.click();">
                         👤 Profile
-                    </a>
+                    </button>
                     <ul class="dropdown-menu dropdown-menu-end" style="background-color: #16213E;">
                         <li><a class="dropdown-item text-light" href="{{ url_for('profile.view_profile') }}">
                             <i class="fas fa-user"></i> View Profile</a></li>
@@ -154,9 +162,16 @@
                         <li><a class="dropdown-item text-danger" href="{{ url_for('auth.logout') }}">
                             <i class="fas fa-sign-out-alt"></i> Logout</a></li>
                     </ul>
-                </li>
+                    </li>
                 {% endif %}
+                <li class="nav-item d-flex align-items-center">
+              <button id="modeToggle" class="btn btn-sm btn-outline-light ms-3" title="Toggle dark/light mode">
+                <i class="fas fa-moon"></i>
+              </button>
+            </li>
+
             </ul>
+
         </div>
     </div>
 </nav>
@@ -165,7 +180,7 @@
     <h3 class="text-center" style="color: rgba(128,100,0,0.79);">Campus Buddy Chatbot</h3>
     <div class="chat-box" id="chat-box"></div>
     <div class="input-group">
-      <input type="text" id="user-input" class="form-control" placeholder="Ask me anything...">
+        <label for="user-input"></label><input type="text" id="user-input" class="form-control" placeholder="Ask me anything...">
       <button onclick="sendMessage()" class="btn">Send</button>
     </div>
 
@@ -178,9 +193,19 @@
   </div>
 </div>
 
+<audio id="reminderSound" src="{{ url_for('static', filename='audio/notify.mp3') }}" preload="auto"></audio>
+
+
 <footer>
-  &copy; {{ current_year }} Campus Buddy. All rights reserved.
+    <a href="https://www.linkedin.com/school/tus-ie/?originalSubdomain=ie"><i class="fab fa-linkedin"></i></a>
+    <a href="https://www.tiktok.com/@tus_ie?is_from_webapp=1&sender_device=pc"><i class="fab fa-tiktok"></i></a>
+    <a href="https://www.instagram.com/tus_ire/"><i class="fab fa-instagram"></i></a>
+    <a href="https://www.facebook.com/TUoftheShannon"><i class="fab fa-facebook"></i></a>
+    <a href="https://www.youtube.com/channel/UCk_JmKG2Ghn9ZIMcb6xqAWg"><i class="fab fa-youtube"></i></a>
+    <p class="mt-3">&copy; 2025 Campus Buddy. All rights reserved.</p>
+
 </footer>
+
 
 <script>
 window.onload = function () {
@@ -206,6 +231,8 @@ window.onload = function () {
         <button class="chip" onclick="quickAsk('Canteen Menu')">🥗 Canteen</button>
         <button class="chip" onclick="quickAsk('Erasmus Info')">🌍 Erasmus</button>
         <button class="chip" onclick="quickAsk('Events')">📅 Events</button>
+      <button onclick="sendQuickMessage('Mindfulness tips')">🧘 Mindfulness Tips</button>
+
       </div>
     </div>
   `;
@@ -218,6 +245,98 @@ window.onload = function () {
   }
 
   chatBox.scrollTop = chatBox.scrollHeight;
+}
+const socket = io();
+let lastReminderIds = [];
+
+function fetchReminders() {
+  fetch("/calendar/reminders")
+    .then(res => res.json())
+    .then(data => {
+      const newIds = data.reminders.map(r => r.id);
+      const newOnes = data.reminders.filter(r => !lastReminderIds.includes(r.id));
+
+      // Play sound only if there are NEW reminders
+      if (newOnes.length > 0) {
+        newOnes.forEach(r => injectBotReminder(r));
+
+        try {
+          document.getElementById('reminderSound').play();
+        } catch (e) {}
+      }
+
+      lastReminderIds = newIds;
+    });
+}
+
+// Injects a reminder message as if it came from the bot (styled)
+function injectBotReminder(reminder) {
+const chatArea = document.getElementById("chat-box");
+  const message = document.createElement("div");
+  message.classList.add("bot-message");
+
+  const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+  message.innerHTML = `
+    <div class="d-flex align-items-start mb-3">
+      <div class="avatar me-2">🤖</div>
+      <div class="bg-light text-dark p-3 rounded shadow-sm">
+        <div><strong>Reminder:</strong> ${reminder.message}</div>
+        <div class="text-muted" style="font-size: 0.8rem;">⏱ ${time}</div>
+        <div class="mt-2">
+          <button class="btn btn-sm btn-outline-secondary" onclick="snoozeReminderBot('${reminder.id}', this)">Snooze</button>
+          <button class="btn btn-sm btn-outline-danger" onclick="dismissReminderBot('${reminder.id}', this)">Dismiss</button>
+        </div>
+      </div>
+    </div>
+  `;
+
+  chatArea.appendChild(message);
+  chatArea.scrollTop = chatArea.scrollHeight;
+}
+
+fetchReminders();
+setInterval(fetchReminders, 60000);
+
+// Real-time socket notification
+socket.on('new_event', data => {
+  injectBotReminder(data);
+  try {
+    document.getElementById('reminderSound').play();
+  } catch (e) {}
+});
+
+document.body.addEventListener('click', () => {
+  const audio = document.getElementById('reminderSound');
+  if (audio) audio.play().catch(() => {});
+}, { once: true });
+
+// Snooze / Dismiss
+function snoozeReminderBot(id, btn) {
+  fetch(`/calendar/snooze/${id}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ minutes: 5 })
+  }).then(() => {
+    btn.closest('.bot-message').remove();
+  });
+}
+
+function dismissReminderBot(id, btn) {
+  fetch(`/calendar/dismiss/${id}`, { method: "POST" })
+    .then(() => {
+      btn.closest('.bot-message').remove();
+    });
+}
+
+
+
+function addBotMessage(text) {
+const chat = document.getElementById("chat-box");
+    const message = document.createElement("div");
+    message.classList.add("bot-message");
+    message.innerHTML = `<p>🤖 Campus Buddy: ${text}</p>`;
+    chat.appendChild(message);
 }
 
 function sendMessage() {
@@ -266,6 +385,12 @@ function quickAsk(text) {
   sendMessage();
 }
 
+function sendQuickMessage(text) {
+  document.getElementById('user-input').value = text;
+  sendMessage();
+}
+
+
 function updateHistory(html) {
   const history = JSON.parse(sessionStorage.getItem('chatHistory')) || [];
   history.push(html);
@@ -276,6 +401,12 @@ function clearHistory() {
   sessionStorage.removeItem('chatHistory');
   document.getElementById('chat-box').innerHTML = '';
 }
+
+const chat = document.getElementById("chat-messages");
+  const modeBtn = document.getElementById("modeToggle");
+  modeBtn.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+  });
 </script>
 
 </body>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Users</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/admin.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logo.png') }}">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        table {
+            width: 95%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: center;
+            border: 1px solid #ccc;
+        }
+        th {
+            background: #f4f4f4;
+        }
+        .danger {
+            color: white;
+            background: crimson;
+            padding: 5px 10px;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .success {
+            color: white;
+            background: green;
+            padding: 5px 10px;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .muted {
+            color: gray;
+        }
+        select {
+            padding: 5px;
+        }
+        .back {
+            display: block;
+            margin: 20px auto;
+            text-align: center;
+            color: #333;
+        }
+        form {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+   {% extends 'admin/base.html' %}
+
+{% block content %}
+    <h1>👥 User Management Panel</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul class="flashes">
+          {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.role }}</td>
+<td>{{ 'Active' if user.active else 'Deactivated' }}</td>
+<td>
+    <a href="{{ url_for('admin.toggle_user', user_id=user._id) }}"
+       class="{{ 'danger' if user.active else 'success' }}">
+       {{ 'Deactivate' if user.active else 'Activate' }}
+    </a>
+                    <form action="{{ url_for('admin.promote_user', user_id=user._id) }}" method="POST">
+                        <select name="role">
+                            <option value="student" {% if user.role == 'student' %}selected{% endif %}>Student</option>
+                            <option value="staff" {% if user.role == 'staff' %}selected{% endif %}>Canteen Staff</option>
+                            <option value="admin" {% if user.role == 'admin' %}selected{% endif %}>Admin</option>
+                        </select>
+                        <button type="submit">Update Role</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ url_for('admin.dashboard') }}" class="back">← Back to Dashboard</a>
+{% endblock %}
+</body>
+</html>

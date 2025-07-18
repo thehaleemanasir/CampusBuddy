@@ -1,10 +1,392 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Contact Us</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About - Campus Buddy</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+<link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logo.png') }}">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f8f9fa;
+      color: #0A2342;
+      overflow-x: hidden;
+    }
+
+    .navbar {
+      background-color: #0A2342;
+    }
+    .navbar-nav .nav-link {
+      color: #FFD700;
+      font-weight: 600;
+    }
+    .navbar-nav .nav-link:hover {
+      color: #ffffff;
+    }
+
+.hero {
+  background: linear-gradient(135deg, #1b1818, #0a0f1a);
+  color: #FFD700;
+  text-align: center;
+  padding: 100px 20px 60px;
+  position: relative;
+}
+.hero h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+.hero p {
+  font-size: 1.3rem;
+  color: #f8f9fa;
+  opacity: 0.9;
+}
+    .hero svg {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+    }
+
+
+    .stats {
+      background: #ffffff;
+      padding: 50px 20px;
+      text-align: center;
+    }
+    .stats h3 {
+      font-size: 2rem;
+      color: #0A2342;
+    }
+    .stats p {
+      font-size: 1.1rem;
+      color: #555;
+    }
+
+
+    .section {
+      background: #ffffff;
+      padding: 60px 20px;
+      margin: 30px 0;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+    .section h2 {
+      color: #FFD700;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+
+    .dark-mode {
+      background: #1b1818;
+      color: #f8f9fa;
+    }
+    .dark-mode .hero {
+      background: #2c2c2c;
+      color: #f8f9fa;
+    }
+    .dark-mode .p-4 {
+      background: #2c2c2c;
+      color: #fff;
+    }
+
+    .dark-mode .fas fa-comment-dots
+    {
+      color: black;
+    }
+
+    .feature-card {
+      padding: 30px;
+      border-radius: 20px;
+      background: #f9f9ff;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+      transition: transform 0.3s;
+    }
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+    }
+    .feature-card i {
+      font-size: 3rem;
+      color: #FFD700;
+      margin-bottom: 15px;
+    }
+
+
+    .creator img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 20px;
+    }
+
+
+    .tech-chip {
+      display: inline-block;
+      background: #FFD700;
+      color: #0A2342;
+      padding: 8px 16px;
+      margin: 5px;
+      border-radius: 30px;
+      font-weight: 600;
+    }
+
+    footer {
+            background-color: #1c1c1c;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+    footer a {
+            color: white;
+            margin: 0 0.5rem;
+        }
+  </style>
 </head>
+
 <body>
-    <h1>Contact Us</h1>
-    <p>Reach out to us for any questions or feedback.</p>
+
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: RGB(33, 33, 33); padding: 1rem 2rem; font-size: 20px">
+    <div class="container-fluid">
+        <a class="navbar-brand d-flex align-items-center" href="{{ url_for('home.homepage') }}">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="TUS Logo" height="220" width="350" class="me-2">
+        </a>
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars text-light"></i>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav align-items-center" >
+                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('home.homepage') }}">Home</a></li>
+                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('home.about') }}">About</a></li>
+                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('chatbot.chatbot') }}">Chatbot</a></li>
+                <li class="nav-item"><a class="nav-link text-white px-3 active-page" href="{{ url_for('canteen.canteen_menu') }}">Canteen Menu</a></li>
+                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('society.societies_list') }}">Society & Clubs</a></li>
+                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('home.academic_support') }}">Academic Support</a></li>
+                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('home.mental_health') }}">Mental Health</a></li>
+                <li class="nav-item"><a class="nav-link text-white px-3" href="{{ url_for('calendar.calendar') }}">Calendar</a></li>
+                {% if 'user_id' in session %}
+                <li class="nav-item dropdown">
+                    <button class="nav-link dropdown-toggle text-white px-3 btn btn-link" id="userDropdown"
+                        data-bs-toggle="dropdown" aria-expanded="false" onkeydown="if(event.key === 'Enter') this.click();">
+                        👤 Profile
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" style="background-color: #16213E;">
+                        <li><a class="dropdown-item text-light" href="{{ url_for('profile.view_profile') }}">
+                            <i class="fas fa-user"></i> View Profile</a></li>
+                        <li><hr class="dropdown-divider bg-light"></li>
+                        <li><a class="dropdown-item text-danger" href="{{ url_for('auth.logout') }}">
+                            <i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                    </ul>
+                    </li>
+                {% endif %}
+                <li class="nav-item d-flex align-items-center">
+              <button id="modeToggle" class="btn btn-sm btn-outline-light ms-3" title="Toggle dark/light mode">
+                <i class="fas fa-moon"></i>
+              </button>
+            </li>
+
+            </ul>
+
+        </div>
+    </div>
+</nav>
+<div style="height: 2px; background-color: #FFD700; width: 100%;"></div>
+
+
+<section class="hero">
+  <h1 data-aos="fade-down">About Campus Buddy</h1>
+  <p data-aos="fade-up">Making campus life simpler, smarter, faster.</p>
+</section>
+
+
+<div class="container my-5">
+  <div class="row align-items-center">
+    <div class="col-md-6" data-aos="fade-right">
+      <h2>What Campus Buddy Solves?</h2>
+      <p>Students often find it difficult to navigate multiple systems for academic support, events, societies, and wellbeing resources. Campus Buddy centralizes everything into one easy-to-use platform designed specifically for student needs.</p>
+    </div>
+    <div class="col-md-6 text-center" data-aos="fade-left">
+    <img src="{{ url_for('static', filename='images/typing-bubble.gif') }}" height="400" width="400" alt="Typing Bot Bubble">
+    </div>
+  </div>
+</div>
+
+<!-- Features -->
+<div class="container my-5">
+  <h2 class="text-center mb-5" data-aos="fade-up">Key Features</h2>
+  <div class="row g-4">
+    <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+      <div class="feature-card">
+        <i class="fas fa-calendar-days"></i>
+        <h5>Campus Calendar</h5>
+      </div>
+    </div>
+    <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+      <div class="feature-card">
+        <i class="fas fa-robot"></i>
+        <h5>Support Chatbot</h5>
+      </div>
+    </div>
+    <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+      <div class="feature-card">
+        <i class="fas fa-utensils"></i>
+        <h5>Canteen Menus</h5>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Meet the Creator -->
+<div class="container my-5 text-center creator" data-aos="fade-up">
+  <h2>Hi, I'm Haleema Nasir!</h2>
+  <p>Final year student at Technological University of the Shannon. Passionate about simplifying student life through technology and design.</p>
+</div>
+<div class="container my-5 text-center" data-aos="fade-up">
+    <h2>🧠 Mental Health & Wellbeing Support</h2>
+    <div class="mt-4">
+    <p>
+      Campus Buddy goes beyond academics by offering a dedicated Mental Health platform for students.
+      Key mental health features include:
+      <ul>
+        <p>Guided breathing and grounding techniques for stress relief</p>
+        <p>Daily mood tracking and wellbeing journal</p>
+        <p>Digital detox tips to encourage mindful screen usage</p>
+        <p>Positive affirmations wall for emotional resilience</p>
+        <p>Instant access to emergency mental health contacts</p>
+        <p>AI-powered chatbot trained to guide students to counselling services</p>
+      </ul>
+      Supporting mental wellbeing is a core mission of Campus Buddy, because academic success begins with emotional health. 💛
+    </p>
+    </div>
+</div>
+
+<!-- Tech Stack -->
+<div class="container my-5 text-center" data-aos="fade-up">
+  <h2>Our Technology Stack</h2>
+  <div class="mt-4">
+    <span class="tech-chip">Flask</span>
+    <span class="tech-chip">MongoDB</span>
+    <span class="tech-chip">Bootstrap 5</span>
+    <span class="tech-chip">Socket.IO</span>
+    <span class="tech-chip">OpenAI GPT</span>
+  </div>
+</div>
+
+<!-- How It Works -->
+<div class="container my-5">
+  <h2 class="text-center mb-5" data-aos="fade-up">How It Works</h2>
+  <div class="row g-4 text-center">
+    <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+      <div class="feature-card">
+        <i class="fas fa-comment-dots"></i>
+        <h5>Ask Chatbot</h5>
+      </div>
+    </div>
+    <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+      <div class="feature-card">
+        <i class="fas fa-info-circle"></i>
+        <h5>Get Information</h5>
+      </div>
+    </div>
+    <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+      <div class="feature-card">
+        <i class="fas fa-bell"></i>
+        <h5>Receive Reminders</h5>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    <a href="https://www.linkedin.com/school/tus-ie/?originalSubdomain=ie"><i class="fab fa-linkedin"></i></a>
+    <a href="https://www.tiktok.com/@tus_ie?is_from_webapp=1&sender_device=pc"><i class="fab fa-tiktok"></i></a>
+    <a href="https://www.instagram.com/tus_ire/"><i class="fab fa-instagram"></i></a>
+    <a href="https://www.facebook.com/TUoftheShannon"><i class="fab fa-facebook"></i></a>
+    <a href="https://www.youtube.com/channel/UCk_JmKG2Ghn9ZIMcb6xqAWg"><i class="fab fa-youtube"></i></a>
+    <p class="mt-3">&copy; 2025 Campus Buddy. All rights reserved.</p>
+
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({
+    duration: 1000,
+    once: true
+  });
+
+  const modeBtn = document.getElementById("modeToggle");
+  modeBtn.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+  });
+
+  document.addEventListener("DOMContentLoaded", function() {
+  const chatToggle = document.getElementById('chatToggle');
+  const chatPopup = document.getElementById('chatPopup');
+
+  if (chatToggle && chatPopup) {
+    chatToggle.addEventListener('click', function() {
+      if (chatPopup.style.display === "none" || chatPopup.style.display === "") {
+        chatPopup.style.display = "block";
+      } else {
+        chatPopup.style.display = "none";
+      }
+    });
+  }
+});
+
+</script>
+
+
+<button id="chatToggle" title="Chat with Campus Buddy" style="
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  background-color: #FFD700;
+  color: #0A2342;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 24px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+">
+  <i class="fas fa-comments"></i>
+</button>
+
+<a href="{{ url_for('chatbot.chatbot') }}" id="chatButton" title="Chat with Campus Buddy" style="
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  background-color: #FFD700;
+  color: #0A2342;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 24px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+">
+  <i class="fas fa-comments"></i>
+</a>
+
 </body>
 </html>

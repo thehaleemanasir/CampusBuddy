@@ -1,22 +1,16 @@
-# Ignore environment variables
 .env
 
-# Ignore Python cache files
 __pycache__/
 *.pyc
 *.pyo
 
-# Ignore virtual environments
 .venv/
 venv/
 
-# Ignore logs and temporary files
 *.log
 
-# Ignore database files
 *.sqlite3
 *.db
 
-# Ignore VS Code and PyCharm settings
 .vscode/
 .idea/

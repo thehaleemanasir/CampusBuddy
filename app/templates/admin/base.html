@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Campus Buddy Admin Panel</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logo.png') }}">
+
+  <style>
+    body {
+      background-color: white;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .navbar {
+      background-color: #1e1e1e;
+    }
+
+    .navbar .nav-link,
+    .navbar .navbar-brand {
+      color: white !important;
+    }
+
+    .navbar .nav-link:hover,
+    .navbar .nav-link:focus {
+      color: #d4af37 !important;
+    }
+
+    .navbar-brand img {
+      height: 150px;
+    }
+
+    .navbar .dropdown-menu {
+      background-color: #2e2e2e;
+      border: none;
+    }
+
+    .navbar .dropdown-menu a {
+      color: white;
+    }
+
+    .navbar .dropdown-menu a:hover {
+      background-color: #444;
+      color: #d4af37;
+    }
+
+    .footer {
+      background-color: #1b1818;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 50px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg shadow-sm">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center" href="{{ url_for('admin.dashboard') }}">
+      <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Campus Buddy Logo" class="me-2">
+      <span class="fw-bold text-white">Campus Buddy Admin</span>
+    </a>
+    <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#adminNavbar" aria-controls="adminNavbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="adminNavbar">
+      <ul class="navbar-nav gap-3">
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('admin.dashboard') }}">🏠 Dashboard</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('admin.manage_users') }}">👥 Users</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('admin.chatbot_logs') }}">💬 Chatbot Logs</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Flash Messages -->
+<div class="container">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="mt-3">
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+</div>
+
+<!-- Main Content -->
+<div class="container">
+  {% block content %}{% endblock %}
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <div class="container">
+    <p class="mb-0">&copy; 2025 Campus Buddy | Admin Panel</p>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

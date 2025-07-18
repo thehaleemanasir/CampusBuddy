@@ -35,10 +35,83 @@ section {
     text-align: center;
 }
 
-footer {
-    text-align: center;
-    padding: 1rem;
-    background: #007bff;
-    color: white;
-    margin-top: 2rem;
+    footer {
+            background-color: #1c1c1c;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+    footer a {
+            color: white;
+            margin: 0 0.5rem;
+        }
+
+           /* Dark Mode */
+
+/* Default (Light Mode) Pagination */
+.pagination .page-link {
+  color: #0A2342;
+  font-weight: 600;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin: 0 5px;
+  transition: 0.3s;
+}
+
+.pagination .page-link:hover {
+  background-color: #FFD700;
+  color: #0A2342;
+  border-color: #FFD700;
+}
+
+.pagination .active .page-link {
+  background-color: #FFD700;
+  color: #0A2342;
+  border-color: #FFD700;
+}
+
+/* Dark Mode */
+body.dark-mode .pagination .page-link {
+  background-color: #1b1b1b;
+  color: #f8f9fa;
+  border: 1px solid #444;
+}
+
+body.dark-mode .pagination .page-link:hover {
+  background-color: #FFD700;
+  color: #0A2342;
+  border-color: #FFD700;
+}
+
+body.dark-mode .pagination .active .page-link {
+  background-color: #FFD700;
+  color: #0A2342;
+  border-color: #FFD700;
+}
+
+body, .card, nav, footer, .pagination .page-link {
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+
+    .pagination .page-link {
+  color: #0A2342;
+  font-weight: 600;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin: 0 5px;
+  transition: 0.3s;
+}
+
+.pagination .page-link:hover {
+  background-color: #FFD700;
+  color: #0A2342;
+  border-color: #FFD700;
+}
+
+.pagination .active .page-link {
+  background-color: #FFD700;
+  color: #0A2342;
+  border-color: #FFD700;
 }

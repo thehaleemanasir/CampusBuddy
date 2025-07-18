@@ -1,0 +1,70 @@
+{
+  "faq": {
+    "general_info": [
+      {
+        "question": "What is the 1916 Bursary Fund?",
+        "answer": "The 1916 Bursary is a financial award to support students from underrepresented backgrounds in higher education. More info: https://1916bursary.ie"
+      }
+    ],
+    "eligibility": [
+      {
+        "question": "Who can apply for the 1916 Bursary?",
+        "answer": "Students entering year 1 of an undergraduate program with a household income below €25,000 and belonging to an eligible priority group. More details: https://1916bursary.ie/who-is-it-for/"
+      },
+      {
+        "question": "Who cannot apply for the 1916 Bursary?",
+        "answer": "Postgraduate students, those already enrolled in higher education, and students repeating first year are not eligible."
+      }
+    ],
+    "application_process": [
+      {
+        "question": "How do I apply for a 1916 Bursary?",
+        "answer": "Applications are submitted online through the TUS Bursary Application Portal with supporting documents."
+      }
+    ],
+    "financial_details": [
+      {
+        "question": "How much is the 1916 Bursary worth?",
+        "answer": "Tier 1: €5,000 per year, Tier 2: €2,000 per year, Tier 3: €1,500 one-time grant."
+      }
+    ],
+    "priority_groups": [
+      {
+        "question": "What are the priority groups for the 1916 Bursary?",
+        "answer": "Students with disabilities, lone parents, Irish Travellers, Roma students, mature students, and those from socio-economically disadvantaged backgrounds."
+      }
+    ],
+    "documentation": [
+      {
+        "question": "What documents are required for applicants with disabilities?",
+        "answer": "A medical professional's letter or an educational needs assessment."
+      },
+      {
+        "question": "What documents are required for ethnic minority applicants?",
+        "answer": "Official residency documentation such as refugee status or asylum-seeker documents."
+      }
+    ],
+    "payments": [
+      {
+        "question": "If I am awarded the 1916 Bursary, how will I be paid?",
+        "answer": "Payments are made in installments directly to the student."
+      }
+    ],
+    "appeals": [
+      {
+        "question": "If I am refused, can I appeal?",
+        "answer": "Yes, an appeals process is available for unsuccessful applicants."
+      },
+      {
+        "question": "How do I make an appeal?",
+        "answer": "Submit a written appeal with supporting documentation within the specified deadline."
+      }
+    ],
+    "data_protection": [
+      {
+        "question": "How will my data be treated?",
+        "answer": "All personal information is handled in compliance with GDPR and privacy laws."
+      }
+    ]
+  }
+}

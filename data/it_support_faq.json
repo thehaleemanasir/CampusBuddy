@@ -1,0 +1,63 @@
+{
+  "it_services": {
+    "description": "The IT Support and Guides section provides information and links about the IT platforms used on the Athlone campus, including teaching and learning platforms like Moodle, Zoom, and Office 365, as well as IT support services.",
+    "platforms": {
+      "moodle": {
+        "description": "Moodle is the virtual learning environment where students can access class materials, coursework, and assessments. It also provides information about student supports through the Student Learning Hub.",
+        "access_link": "https://tus.ie/moodle"
+      },
+      "zoom": {
+        "description": "Zoom is used for virtual classes and meetings, facilitating real-time interaction between lecturers and students.",
+        "access_link": "https://tus.ie/zoom"
+      },
+      "office_365": {
+        "description": "Office 365 offers a suite of applications including Word, Excel, PowerPoint, and OneDrive, enabling students to create, store, and collaborate on documents.",
+        "access_link": "https://tus.ie/office365"
+      }
+    },
+    "it_support": {
+      "description": "IT support is available to assist students with issues such as password resets and multi-factor authentication (MFA) settings. Support for personal devices or home internet connections is not provided.",
+      "contact_method": "Students can request IT assistance by completing the Student Helpdesk form available on the IT Support page.",
+      "mfa": {
+        "description": "Multi-Factor Authentication (MFA) adds an extra layer of security to student accounts by requiring a second form of verification, typically through the Microsoft Authenticator app.",
+        "setup_guide": "A guide for setting up MFA is available on the IT Support page.",
+        "faq": [
+          {
+            "question": "What is MFA?",
+            "answer": "MFA stands for multi-factor authentication, requiring at least two forms of verification to access an account: a password and a secondary method like the Microsoft Authenticator app."
+          },
+          {
+            "question": "What if I don’t have a smartphone?",
+            "answer": "A smartphone is necessary for MFA. If you don't have one, you'll need to acquire one or use a trusted person's device, though using someone else's phone is not recommended due to inconvenience."
+          },
+          {
+            "question": "How do I set up MFA?",
+            "answer": "MFA setup requires both a smartphone with the Microsoft Authenticator app installed and a computer. Detailed setup instructions are provided on the IT Support page."
+          },
+          {
+            "question": "What if I lose my phone?",
+            "answer": "If your phone is the only registered device for MFA, you'll need to contact the IT Helpdesk to have your MFA reset. Afterward, register a new device to regain account access."
+          },
+          {
+            "question": "Can I register more than one phone?",
+            "answer": "Yes, you can register multiple devices for MFA. However, it's advisable to only add devices you fully trust and to disable notifications on backup devices to prevent unnecessary prompts."
+          }
+        ]
+      }
+    },
+    "additional_resources": {
+      "student_discounts": {
+        "description": "Information about available student discounts on software and hardware is provided.",
+        "access_link": "https://tus.ie/student-discounts"
+      },
+      "useful_links": {
+        "description": "A collection of links to frequently used resources and platforms.",
+        "access_link": "https://tus.ie/useful-links"
+      },
+      "useful_downloads": {
+        "description": "Access to downloadable resources and software essential for coursework.",
+        "access_link": "https://tus.ie/useful-downloads"
+      }
+    }
+  }
+}
